@@ -1,0 +1,42 @@
+
+c	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò‚çÒ
+E
+java:S6212"/Declare this local variable with "var" instead.(ô©Æ¿
+c	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªÊÕØ
+J
+java:S6212"/Declare this local variable with "var" instead.(¾Ÿ’‹øÿÿÿÿ
+E
+java:S6212"/Declare this local variable with "var" instead.(ô©Æ¿
+h	java:S100)"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…Õ´¸ıÿÿÿÿ
+J
+java:S6212+"/Declare this local variable with "var" instead.(ø‚Áûÿÿÿÿ
+E
+java:S6212,"/Declare this local variable with "var" instead.(ùş¡‚
+E
+java:S6212-"/Declare this local variable with "var" instead.(ô©Æ¿
+c	java:S100<"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í…øĞ
+J
+java:S6212>"/Declare this local variable with "var" instead.(ø‚Áûÿÿÿÿ
+E
+java:S6212?"/Declare this local variable with "var" instead.(ùş¡‚
+E
+java:S6212@"/Declare this local variable with "var" instead.(ô©Æ¿
+h	java:S100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ©øëúÿÿÿÿ
+J
+java:S6212Q"/Declare this local variable with "var" instead.(ø‚Áûÿÿÿÿ
+E
+java:S6212R"/Declare this local variable with "var" instead.(ùş¡‚
+E
+java:S6212S"/Declare this local variable with "var" instead.(ô©Æ¿
+b	java:S100b"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢š„
+J
+java:S6212d"/Declare this local variable with "var" instead.(¾Ÿ’‹øÿÿÿÿ
+E
+java:S6212e"/Declare this local variable with "var" instead.(ô©Æ¿
+h	java:S100t"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ù²‡åùÿÿÿÿ
+J
+java:S6212v"/Declare this local variable with "var" instead.(¾Ÿ’‹øÿÿÿÿ
+E
+java:S6212w"/Declare this local variable with "var" instead.(ô©Æ¿
+@
+java:S5960"+Remove this assertion from production code.(±¶]

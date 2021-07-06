@@ -1,0 +1,17 @@
+
+b	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(áøÉ
+b	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÂµ
+
+D
+java:S6212"/Declare this local variable with "var" instead.(íé„Y
+h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õö“ûÿÿÿÿ
+J
+java:S6212"/Declare this local variable with "var" instead.(ƒä«œùÿÿÿÿ
+c	java:S100&"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉÌÀ
+E
+java:S6212("/Declare this local variable with "var" instead.(±ÔÌá
+h	java:S1001"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜‰œƒûÿÿÿÿ
+E
+java:S62122"/Declare this local variable with "var" instead.(¯¯ï
+E
+java:S62129"/Declare this local variable with "var" instead.(¥§Ø‡
