@@ -3,6 +3,9 @@ package de.schmiereck.gnn;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Linear Neurons with input-limits and without reinforcement.
+ */
 public class NeuronService {
     public static final int HIGH_VALUE = 10;
     public static final int NULL_VALUE = 0;

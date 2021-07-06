@@ -1,7 +1,7 @@
 # Basics
 
 Genetische Algorithmus für das Training.
-1. Beweisen das das funktioniert.
+1. Beweisen, dass dies funktioniert.
 
 # Erweiterungen
 
@@ -21,45 +21,46 @@ sich
 
 ----
 # Aufgaben
-## IS
+## Linear Neurons with input-limits and without reinforcement.
+### IS
            N0 
     -10  => -10  
     +10  => +10  
 
-## NOT
+### NOT
            N0 
     -10  => +10  
     +10  => -10  
 
-## AND
+### AND
              N0 
     -10 -10 => -10  
     +10 -10 =>   0  
     -10 +10 =>   0 
     +10 +10 => +10 
 
-## OR
+### OR
              N0 
     -10 -10 =>   0  
     +10 -10 =>   5  
     -10 +10 =>   5 
     +10 +10 => +10 
 
-## XOR
+### XOR
              N0 
     -10 -10 => -10  
     +10 -10 => +10  
     -10 +10 => +10 
     +10 +10 => -10 
 
-## XAND
+### XAND
              N0 
     -10 -10 => +10  
     +10 -10 => -10  
     -10 +10 => -10 
     +10 +10 => +10 
 
-## Count
+### Count
              N0 N1
     -10 -10 => -10 -10
     +10 -10 => +10 -10
