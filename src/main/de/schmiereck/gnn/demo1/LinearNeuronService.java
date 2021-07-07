@@ -1,12 +1,15 @@
-package de.schmiereck.gnn;
+package de.schmiereck.gnn.demo1;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.schmiereck.gnn.Input;
+import de.schmiereck.gnn.Neuron;
+
 /**
  * Linear Neurons with input-limits and without reinforcement.
  */
-public class NeuronService {
+public class LinearNeuronService {
     public static final int HIGH_VALUE = 10;
     public static final int NULL_VALUE = 0;
     public static final int LOW_VALUE = -HIGH_VALUE;

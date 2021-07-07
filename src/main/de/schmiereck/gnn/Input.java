@@ -1,6 +1,6 @@
 package de.schmiereck.gnn;
 
-import static de.schmiereck.gnn.NeuronService.HIGH_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
 
 public class Input {
     private Neuron neuron;

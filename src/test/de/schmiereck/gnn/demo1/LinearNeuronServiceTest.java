@@ -1,13 +1,17 @@
-package de.schmiereck.gnn;
+package de.schmiereck.gnn.demo1;
 
 import org.junit.Test;
 
-import static de.schmiereck.gnn.NeuronService.HIGH_D2_VALUE;
-import static de.schmiereck.gnn.NeuronService.HIGH_VALUE;
-import static de.schmiereck.gnn.NeuronService.NULL_VALUE;
+import de.schmiereck.gnn.Input;
+import de.schmiereck.gnn.Neuron;
+import de.schmiereck.gnn.demo1.LinearNeuronService;
+
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_D2_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NeuronServiceTest {
+public class LinearNeuronServiceTest {
 
     @Test
     public void test_calc_empty_neuron() {
@@ -15,10 +19,10 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
-        assertEquals(0, neuron.getOutputValue());
+        assertEquals(NULL_VALUE, neuron.getOutputValue());
     }
 
     @Test
@@ -28,10 +32,11 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         inNeuron.setOutputValue(HIGH_VALUE);
+
         neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
         assertEquals(HIGH_VALUE, neuron.getOutputValue());
@@ -45,12 +50,13 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         in1Neuron.setOutputValue(HIGH_VALUE);
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
         in2Neuron.setOutputValue(HIGH_VALUE);
+
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
         neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
         assertEquals(HIGH_VALUE, neuron.getOutputValue());
@@ -64,12 +70,13 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         in1Neuron.setOutputValue(HIGH_VALUE);
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
         in2Neuron.setOutputValue(HIGH_D2_VALUE);
+
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
         neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
         assertEquals((HIGH_VALUE + HIGH_VALUE / 2) / 2, neuron.getOutputValue());
@@ -83,12 +90,13 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         in1Neuron.setOutputValue(HIGH_VALUE);
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
         in2Neuron.setOutputValue(HIGH_VALUE);
+
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
         neuron.getInputList().add(new Input(in2Neuron, HIGH_D2_VALUE, NULL_VALUE));
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
         assertEquals((HIGH_VALUE + HIGH_VALUE / 2) / 2, neuron.getOutputValue());
@@ -101,12 +109,13 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         inNeuron.setOutputValue(HIGH_VALUE);
+
         neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
 
         neuron.setLimitValue(HIGH_D2_VALUE);
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
         assertEquals(HIGH_VALUE, neuron.getOutputValue());
@@ -119,12 +128,13 @@ public class NeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         inNeuron.setOutputValue(HIGH_D2_VALUE);
+
         neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
 
         neuron.setLimitValue(HIGH_VALUE);
 
         // Act
-        NeuronService.calc(neuron);
+        LinearNeuronService.calc(neuron);
 
         // Assert
         assertEquals(NULL_VALUE, neuron.getOutputValue());

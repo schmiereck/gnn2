@@ -1,5 +1,7 @@
 package de.schmiereck.gnn;
 
+import de.schmiereck.gnn.demo1.LinearNeuronService;
+
 public class LayerService {
 
     public static Layer newLayer(final int neuronCount) {
@@ -13,6 +15,6 @@ public class LayerService {
     }
 
     public static void calc(final Layer layer) {
-        layer.getNeuronList().stream().forEach(NeuronService::calc);
+        layer.getNeuronList().stream().forEach(LinearNeuronService::calc);
     }
 }

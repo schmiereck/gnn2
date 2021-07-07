@@ -1,11 +1,15 @@
-package de.schmiereck.gnn;
+package de.schmiereck.gnn.demo1;
 
 import org.junit.jupiter.api.Test;
 
+import de.schmiereck.gnn.Net;
+import de.schmiereck.gnn.NetService;
+import de.schmiereck.gnn.Neuron;
+
 import static de.schmiereck.gnn.NetServiceTestUtils.assert_real_2_1_net;
-import static de.schmiereck.gnn.NeuronService.HIGH_VALUE;
-import static de.schmiereck.gnn.NeuronService.LOW_VALUE;
-import static de.schmiereck.gnn.NeuronService.NULL_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 
 public class NetService_2_1_net_with_NAND_weights_Test {
 

@@ -4,10 +4,10 @@ package de.schmiereck.gnn;
 import org.junit.jupiter.api.Test;
 
 import static de.schmiereck.gnn.NetServiceTestUtils.assert_1x2_net;
-import static de.schmiereck.gnn.NeuronService.HIGH_D2_VALUE;
-import static de.schmiereck.gnn.NeuronService.HIGH_VALUE;
-import static de.schmiereck.gnn.NeuronService.LOW_VALUE;
-import static de.schmiereck.gnn.NeuronService.NULL_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_D2_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,4 +1,6 @@
-package de.schmiereck.gnn;
+package de.schmiereck.gnn.demo3;
+
+import de.schmiereck.gnn.Neuron;
 
 /**
  * Linear Neurons with input-limits and without reinforcement.
