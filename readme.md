@@ -21,37 +21,56 @@ sich
 
 ----
 # Aufgaben
+     AND: „*“
+     OR: „+“
+     NOT: „/“ or „~“
 ## Linear Neurons with input-limits and without reinforcement.
-### IS
+### IS (A)
            N0 
     -10  => -10  
     +10  => +10  
 
-### NOT
+### NOT /(A)
            N0 
     -10  => +10  
     +10  => -10  
 
-### AND
+### AND (A * B)
              N0 
     -10 -10 => -10  
-    +10 -10 =>   0  
-    -10 +10 =>   0 
+    +10 -10 =>   0  should better -10 ?
+    -10 +10 =>   0  should better -10 ?
     +10 +10 => +10 
 
-### OR
+### NAND ~(A * B)
+             N0 
+    -10 -10 => +10  
+    +10 -10 => +10   fail
+    -10 +10 => +10   fail
+    +10 +10 => -10 
+
+### OR (A + B)
              N0 
     -10 -10 =>   0  
     +10 -10 =>   5  
     -10 +10 =>   5 
     +10 +10 => +10 
 
-### XOR
+### NOR ~(A + B)
              N0 
-    -10 -10 => -10  
+    -10 -10 => +10 
+    +10 -10 =>   5  
+    -10 +10 =>   5 
+    +10 +10 =>   0 
+
+### XOR XOR(A, B)
+    XOR(A, B) = (A + B) * /(A * B)
+
+             N0 
+    -10 -10 =>   0
     +10 -10 => +10  
     -10 +10 => +10 
-    +10 +10 => -10 
+    +10 +10 =>   0 
 
 ### XAND
              N0 
@@ -67,4 +86,9 @@ sich
     -10 +10 => -10 +10
     +10 +10 => +10 +10
 
+# Links
+* https://mixed.de/das-exklusiv-oder-warum-neuron-nicht-gleich-neuron-ist/
+* https://medium.com/@lucaspereira0612/solving-xor-with-a-single-perceptron-34539f395182
+* https://jaxenter.de/maschinelles-lernen-beispiel-neuroph-43725
+* https://deeplearning4j.konduit.ai/getting-started/quickstart
 

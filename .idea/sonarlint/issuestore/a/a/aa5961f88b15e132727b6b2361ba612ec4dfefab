@@ -1,13 +1,0 @@
-
-b	java:S101	"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(®ü¼Ö
-h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ò‚µÚùÿÿÿÿ
-J
-java:S6212"/Declare this local variable with "var" instead.(³×¾Ûøÿÿÿÿ
-h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚°ÿÿÿÿÿ
-E
-java:S6212"/Declare this local variable with "var" instead.(Ëˆâ
-c	java:S100#"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óìŞ×
-E
-java:S6212$"/Declare this local variable with "var" instead.(¯¯ï
-E
-java:S6212*"/Declare this local variable with "var" instead.(¥§Ø‡

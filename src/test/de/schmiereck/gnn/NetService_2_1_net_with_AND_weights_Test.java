@@ -2,7 +2,8 @@ package de.schmiereck.gnn;
 
 import org.junit.jupiter.api.Test;
 
-import static de.schmiereck.gnn.NetServiceTestUtils.assert_real_2x1_net;
+import static de.schmiereck.gnn.NetServiceTestUtils.assert_real_2_1_net;
+import static de.schmiereck.gnn.NeuronService.HIGH_D2_VALUE;
 import static de.schmiereck.gnn.NeuronService.HIGH_VALUE;
 import static de.schmiereck.gnn.NeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.NeuronService.NULL_VALUE;
@@ -18,11 +19,11 @@ public class NetService_2_1_net_with_AND_weights_Test {
         NetService.calc(net);
 
         // Assert
-        assert_real_2x1_net(net, LOW_VALUE, LOW_VALUE, LOW_VALUE);
+        assert_real_2_1_net(net, LOW_VALUE, LOW_VALUE, LOW_VALUE);
     }
 
     @Test
-    public void test_calc_real_2x1_net_HL_with_AND_weights() {
+    public void test_calc_real_2_1_net_HL_with_AND_weights() {
         // Arrange
         final Net net = arrange_real_2_1_net_with_AND_weights(HIGH_VALUE, LOW_VALUE);
 
@@ -30,11 +31,35 @@ public class NetService_2_1_net_with_AND_weights_Test {
         NetService.calc(net);
 
         // Assert
-        assert_real_2x1_net(net, HIGH_VALUE, LOW_VALUE, NULL_VALUE);
+        assert_real_2_1_net(net, HIGH_VALUE, LOW_VALUE, NULL_VALUE);
     }
 
     @Test
-    public void test_calc_real_2x1_net_HH_with_AND_weights() {
+    public void test_calc_real_2_1_net_HD2L_with_AND_weights() {
+        // Arrange
+        final Net net = arrange_real_2_1_net_with_AND_weights(HIGH_D2_VALUE, LOW_VALUE);
+
+        // Act
+        NetService.calc(net);
+
+        // Assert
+        assert_real_2_1_net(net, HIGH_D2_VALUE, LOW_VALUE, NULL_VALUE);
+    }
+
+    @Test
+    public void test_calc_real_2_1_net_HN_with_AND_weights() {
+        // Arrange
+        final Net net = arrange_real_2_1_net_with_AND_weights(HIGH_VALUE, NULL_VALUE);
+
+        // Act
+        NetService.calc(net);
+
+        // Assert
+        assert_real_2_1_net(net, HIGH_VALUE, NULL_VALUE, NULL_VALUE);
+    }
+
+    @Test
+    public void test_calc_real_2_1_net_HH_with_AND_weights() {
         // Arrange
         final Net net = arrange_real_2_1_net_with_AND_weights(HIGH_VALUE, HIGH_VALUE);
 
@@ -42,7 +67,7 @@ public class NetService_2_1_net_with_AND_weights_Test {
         NetService.calc(net);
 
         // Assert
-        assert_real_2x1_net(net, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE);
+        assert_real_2_1_net(net, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE);
     }
 
     private Net arrange_real_2_1_net_with_AND_weights(final int input0Value, final int input1Value) {
@@ -58,6 +83,7 @@ public class NetService_2_1_net_with_AND_weights_Test {
         out0Neuron.getInputList().get(0).setWeight(HIGH_VALUE);
         out0Neuron.getInputList().get(1).setWeight(HIGH_VALUE);
         out0Neuron.setLimitValue(HIGH_VALUE);
+
         return net;
     }
 }

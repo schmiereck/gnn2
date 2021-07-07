@@ -8,7 +8,7 @@ import static de.schmiereck.gnn.NeuronService.HIGH_VALUE;
 import static de.schmiereck.gnn.NeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.NeuronService.NULL_VALUE;
 
-public class NetService_2_1_net_with_OR_weights_Test {
+public class NetService_2_1_net_with_NOR_weights_Test {
 
     @Test
     public void test_calc_real_2_1_net_LL_with_OR_weights() {
@@ -19,7 +19,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
         NetService.calc(net);
 
         // Assert
-        assert_real_2_1_net(net, LOW_VALUE, LOW_VALUE, NULL_VALUE);
+        assert_real_2_1_net(net, LOW_VALUE, LOW_VALUE, HIGH_VALUE);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
         NetService.calc(net);
 
         // Assert
-        assert_real_2_1_net(net, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE);
+        assert_real_2_1_net(net, HIGH_VALUE, HIGH_VALUE, NULL_VALUE);
     }
 
     private Net arrange_real_2_1_net_with_OR_weights(final int input0Value, final int input1Value) {
@@ -56,8 +56,8 @@ public class NetService_2_1_net_with_OR_weights_Test {
 
         final Neuron out0Neuron = net.getLayerList().get(1).getNeuronList().get(0);
 
-        out0Neuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE);
-        out0Neuron.getInputList().get(1).setWeight(HIGH_VALUE, NULL_VALUE);
+        out0Neuron.getInputList().get(0).setWeight(LOW_VALUE, NULL_VALUE);
+        out0Neuron.getInputList().get(1).setWeight(LOW_VALUE, NULL_VALUE);
         out0Neuron.setLimitValue(HIGH_D2_VALUE);
 
         return net;
