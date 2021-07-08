@@ -14,6 +14,7 @@ public class LinearNeuronService {
     public static final int NULL_VALUE = 0;
     public static final int LOW_VALUE = -HIGH_VALUE;
     public static final int HIGH_D2_VALUE = HIGH_VALUE / 2;
+    public static final int LOW_D2_VALUE = LOW_VALUE / 2;
 
     public static void calc(final Neuron neuron) {
         final List<Input> inputs = neuron.getInputList();

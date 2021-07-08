@@ -9,7 +9,13 @@ public class Neuron {
     public enum Func {
         IS,
         NOT,
-        AND
+        OR,
+        NOR,
+        AND,
+        NAND,
+        XOR,
+        XAND,
+        AVERAGE
     };
 
     private List<Input> inputList = new ArrayList<>();

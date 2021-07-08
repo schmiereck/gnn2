@@ -8,6 +8,7 @@ import de.schmiereck.gnn.demo1.LinearNeuronService;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_D2_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_D2_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,78 +21,6 @@ public class FuncNeuronServiceTest {
         final Neuron neuron = new Neuron();
 
         // Act
-        LinearNeuronService.calc(neuron);
-
-        // Assert
-        assertEquals(NULL_VALUE, neuron.getOutputValue());
-    }
-
-    @Test
-    public void test_calc_H_input_IS_func() {
-        // Arrange
-        final Neuron inNeuron = new Neuron();
-        final Neuron neuron = new Neuron();
-
-        inNeuron.setOutputValue(HIGH_VALUE);
-
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
-        neuron.setFunc(Neuron.Func.IS);
-
-        // Act
-        FuncNeuronService.calc(neuron);
-
-        // Assert
-        assertEquals(HIGH_VALUE, neuron.getOutputValue());
-    }
-
-    @Test
-    public void test_calc_H_input_NOT_func() {
-        // Arrange
-        final Neuron inNeuron = new Neuron();
-        final Neuron neuron = new Neuron();
-
-        inNeuron.setOutputValue(HIGH_VALUE);
-
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
-        neuron.setFunc(Neuron.Func.NOT);
-
-        // Act
-        FuncNeuronService.calc(neuron);
-
-        // Assert
-        assertEquals(LOW_VALUE, neuron.getOutputValue());
-    }
-
-    @Test
-    public void test_calc_L_input_NOT_func() {
-        // Arrange
-        final Neuron inNeuron = new Neuron();
-        final Neuron neuron = new Neuron();
-
-        inNeuron.setOutputValue(HIGH_VALUE);
-
-        neuron.getInputList().add(new Input(inNeuron, LOW_VALUE, NULL_VALUE));
-        neuron.setFunc(Neuron.Func.NOT);
-
-        // Act
-        FuncNeuronService.calc(neuron);
-
-        // Assert
-        assertEquals(HIGH_VALUE, neuron.getOutputValue());
-    }
-
-    @Test
-    public void test_calc_N_input_NOT_func() {
-        // Arrange
-        final Neuron inNeuron = new Neuron();
-        final Neuron neuron = new Neuron();
-
-        inNeuron.setOutputValue(HIGH_VALUE);
-
-        neuron.getInputList().add(new Input(inNeuron, NULL_VALUE, NULL_VALUE));
-        neuron.setFunc(Neuron.Func.NOT);
-
-        // Act
         FuncNeuronService.calc(neuron);
 
         // Assert
@@ -99,44 +28,50 @@ public class FuncNeuronServiceTest {
     }
 
     @Test
-    public void test_calc_H_H_input_AND_func() {
+    public void test_complementValue_with_H() {
         // Arrange
-        final Neuron in1Neuron = new Neuron();
-        final Neuron in2Neuron = new Neuron();
-        final Neuron neuron = new Neuron();
-
-        in1Neuron.setOutputValue(HIGH_VALUE);
-        in2Neuron.setOutputValue(HIGH_VALUE);
-
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.setFunc(Neuron.Func.AND);
+        final int value = HIGH_VALUE;
 
         // Act
-        FuncNeuronService.calc(neuron);
+        final int retValue = FuncNeuronService.complementValue(value);
 
         // Assert
-        assertEquals(HIGH_VALUE, neuron.getOutputValue());
+        assertEquals(LOW_VALUE, retValue);
     }
 
     @Test
-    public void test_calc_H_L_input_AND_func() {
+    public void test_complementValue_with_HD2() {
         // Arrange
-        final Neuron in1Neuron = new Neuron();
-        final Neuron in2Neuron = new Neuron();
-        final Neuron neuron = new Neuron();
-
-        in1Neuron.setOutputValue(HIGH_VALUE);
-        in2Neuron.setOutputValue(LOW_VALUE);
-
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.setFunc(Neuron.Func.AND);
+        final int value = HIGH_D2_VALUE;
 
         // Act
-        FuncNeuronService.calc(neuron);
+        final int retValue = FuncNeuronService.complementValue(value);
 
         // Assert
-        assertEquals(NULL_VALUE, neuron.getOutputValue());
+        assertEquals(LOW_D2_VALUE, retValue);
+    }
+
+    @Test
+    public void test_complementValue_with_L() {
+        // Arrange
+        final int value = LOW_VALUE;
+
+        // Act
+        final int retValue = FuncNeuronService.complementValue(value);
+
+        // Assert
+        assertEquals(HIGH_VALUE, retValue);
+    }
+
+    @Test
+    public void test_complementValue_with_LD2() {
+        // Arrange
+        final int value = LOW_D2_VALUE;
+
+        // Act
+        final int retValue = FuncNeuronService.complementValue(value);
+
+        // Assert
+        assertEquals(HIGH_D2_VALUE, retValue);
     }
 }
