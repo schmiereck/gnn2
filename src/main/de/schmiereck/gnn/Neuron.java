@@ -14,8 +14,7 @@ public class Neuron {
         AND,
         NAND,
         XOR,
-        XAND,
-        AVERAGE
+        XNOR
     };
 
     private List<Input> inputList = new ArrayList<>();

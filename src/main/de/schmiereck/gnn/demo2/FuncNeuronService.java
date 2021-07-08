@@ -24,11 +24,15 @@ public class FuncNeuronService {
             case AND -> output = calcAndFunc(neuron);
             case NAND -> output = -calcAndFunc(neuron);
             case XOR -> output = calcXorFunc(neuron);
+            case XNOR -> output = -calcXorFunc(neuron);
             default -> throw new RuntimeException("Unexpected func \"" + neuron.getFunc() + "\".");
         }
         neuron.setOutputValue(output);
     }
 
+    /**
+     * Average of all inputs.
+     */
     private static int calcIsFunc(final Neuron neuron) {
         final int output;
         final List<Input> inputs = neuron.getInputList();
@@ -141,25 +145,5 @@ public class FuncNeuronService {
 
     public static int complementValue(final int value) {
         return -value;
-    }
-
-    private static int calcAverageFunc(final Neuron neuron) {
-        final int output;
-        final List<Input> inputs = neuron.getInputList();
-        final int average;
-        if (inputs.size() > 0) {
-            final int inputSum = inputs.stream().collect(Collectors.summingInt(input -> {
-                return input.getInput();
-            }));
-            average = inputSum / inputs.size();
-        } else {
-            average = NULL_VALUE;
-        }
-        if ((average >= neuron.getLimitValue()) || (average <= -neuron.getLimitValue())) {
-            output = average;
-        } else {
-            output = NULL_VALUE;
-        }
-        return output;
     }
 }
