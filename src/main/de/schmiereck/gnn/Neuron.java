@@ -55,6 +55,10 @@ public class Neuron {
         this.func = func;
     }
 
+    public void setFuncForce(final Func func, final int funcForce) {
+        this.funcForceArr[func.ordinal()] = funcForce;
+    }
+
     public int[] getFuncForceArr() {
         return this.funcForceArr;
     }

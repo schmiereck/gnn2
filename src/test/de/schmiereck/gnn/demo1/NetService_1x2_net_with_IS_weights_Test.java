@@ -18,7 +18,7 @@ public class NetService_1x2_net_with_IS_weights_Test {
         final Net net = arrange_1x2_net_H_with_IS_weights(HIGH_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         // Assert-Topology:
@@ -31,7 +31,7 @@ public class NetService_1x2_net_with_IS_weights_Test {
         final Net net = arrange_1x2_net_H_with_IS_weights(LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         // Assert-Topology:
@@ -42,7 +42,7 @@ public class NetService_1x2_net_with_IS_weights_Test {
         final Net net = NetService.newNet(new int[]{
                 1,
                 1
-        });
+        }, Neuron::new);
         net.setOutput(0, 0, inputValue);
 
         final Neuron out0Neuron = net.getLayerList().get(1).getNeuronList().get(0);

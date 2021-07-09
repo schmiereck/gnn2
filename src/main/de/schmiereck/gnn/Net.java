@@ -10,9 +10,13 @@ public class Net {
         return this.layerList;
     }
 
-    public void setOutput(final int layerPos, final int neuronPos, final int outputValue) {
+    public Neuron getNeuron(final int layerPos, final int neuronPos) {
         final Layer layer = this.getLayerList().get(layerPos);
         final Neuron neuron = layer.getNeuronList().get(neuronPos);
-        neuron.setOutputValue(outputValue);
+        return neuron;
+    }
+
+    public void setOutput(final int layerPos, final int neuronPos, final int outputValue) {
+        getNeuron(layerPos, neuronPos).setOutputValue(outputValue);
     }
 }

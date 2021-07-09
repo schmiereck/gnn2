@@ -21,7 +21,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         final Net net = arrange_real_2_2_1_net_with_XOR_weights(LOW_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_real_2_2_1_net(net, LOW_VALUE, LOW_VALUE, NULL_VALUE);
@@ -33,7 +33,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         final Net net = arrange_real_2_2_1_net_with_XOR_weights(HIGH_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         // n1.0: OR: (A + B)
@@ -50,7 +50,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         final Net net = arrange_real_2_2_1_net_with_XOR_weights(HIGH_VALUE, HIGH_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         // n1.0: OR: (A + B)
@@ -75,7 +75,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
                 2,
                 2,
                 1
-        });
+        }, Neuron::new);
         net.setOutput(0, 0, input0Value);
         net.setOutput(0, 1, input1Value);
 

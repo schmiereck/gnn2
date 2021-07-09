@@ -20,7 +20,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
         final Net net = arrange_real_2_1_net_with_OR_weights(LOW_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_real_2_1_net(net, LOW_VALUE, LOW_VALUE, NULL_VALUE);
@@ -32,7 +32,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
         final Net net = arrange_real_2_1_net_with_OR_weights(HIGH_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_real_2_1_net(net, HIGH_VALUE, LOW_VALUE, HIGH_D2_VALUE);
@@ -44,7 +44,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
         final Net net = arrange_real_2_1_net_with_OR_weights(HIGH_VALUE, HIGH_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_real_2_1_net(net, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE);
@@ -54,7 +54,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
         final Net net = NetService.newNet(new int[]{
                 2,
                 1
-        });
+        }, Neuron::new);
         net.setOutput(0, 0, input0Value);
         net.setOutput(0, 1, input1Value);
 

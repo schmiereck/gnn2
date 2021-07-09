@@ -1,7 +1,11 @@
-package de.schmiereck.gnn;
+package de.schmiereck.gnn.demo1;
 
 
 import org.junit.jupiter.api.Test;
+
+import de.schmiereck.gnn.Net;
+import de.schmiereck.gnn.NetService;
+import de.schmiereck.gnn.Neuron;
 
 import static de.schmiereck.gnn.NetServiceTestUtils.assert_1x2_net;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_D2_VALUE;
@@ -19,7 +23,7 @@ public class NetServiceTest {
         final Net net = new Net();
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assertEquals(0, net.getLayerList().size());
@@ -28,10 +32,10 @@ public class NetServiceTest {
     @Test
     public void test_calc_mini_net() {
         // Arrange
-        final Net net = NetService.newNet(new int[] { 1 });
+        final Net net = NetService.newNet(new int[] { 1 }, Neuron::new);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assertEquals(1, net.getLayerList().size());
@@ -41,11 +45,11 @@ public class NetServiceTest {
     @Test
     public void test_calc_minimal_net() {
         // Arrange
-        final Net net = NetService.newNet(new int[] { 1, 1 });
+        final Net net = NetService.newNet(new int[] { 1, 1 }, Neuron::new);
         net.setOutput(0, 0, HIGH_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_1x2_net(net, HIGH_VALUE, HIGH_VALUE);
@@ -54,12 +58,12 @@ public class NetServiceTest {
     @Test
     public void test_calc_real_2x2_net_HN_with_default_weights() {
         // Arrange
-        final Net net = NetService.newNet(new int[] { 2, 2 });
+        final Net net = NetService.newNet(new int[] { 2, 2 }, Neuron::new);
         net.setOutput(0, 0, HIGH_VALUE);
         net.setOutput(0, 1, NULL_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, NULL_VALUE, HIGH_D2_VALUE, HIGH_D2_VALUE);
@@ -68,12 +72,12 @@ public class NetServiceTest {
     @Test
     public void test_calc_real_2x2_net_HL_with_default_weights() {
         // Arrange
-        final Net net = NetService.newNet(new int[] { 2, 2 });
+        final Net net = NetService.newNet(new int[] { 2, 2 }, Neuron::new);
         net.setOutput(0, 0, HIGH_VALUE);
         net.setOutput(0, 1, LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, LOW_VALUE, NULL_VALUE, NULL_VALUE);
@@ -82,21 +86,16 @@ public class NetServiceTest {
     @Test
     public void test_calc_real_2x2_net_HH_with_default_weights() {
         // Arrange
-        final Net net = NetService.newNet(new int[] { 2, 2 });
+        final Net net = NetService.newNet(new int[] { 2, 2 }, Neuron::new);
         net.setOutput(0, 0, HIGH_VALUE);
         net.setOutput(0, 1, HIGH_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE);
     }
-
-
-
-
-
 
     @Test
     public void test_calc_real_2x2_net_HL_with_count_weights() {
@@ -104,17 +103,14 @@ public class NetServiceTest {
         final Net net = arrange_real_2x2_net(HIGH_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net);
+        NetService.calc(net, LinearNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, LOW_VALUE, HIGH_D2_VALUE, NULL_VALUE);
     }
 
-
-
-
     private Net arrange_real_2x2_net(final int input0Value, final int input1Value) {
-        final Net net = NetService.newNet(new int[] { 2, 2 });
+        final Net net = NetService.newNet(new int[] { 2, 2 }, Neuron::new);
         net.setOutput(0, 0, input0Value);
         net.setOutput(0, 1, input1Value);
 
