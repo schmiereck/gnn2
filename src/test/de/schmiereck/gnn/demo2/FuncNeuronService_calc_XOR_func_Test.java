@@ -101,6 +101,7 @@ public class FuncNeuronService_calc_XOR_func_Test {
 
             outputValues[pos] = neuron.getOutputValue();
         }
+
         // Assert
         for (int pos = 0; pos < input0Values.length; pos++) {
             assertEquals(expectedValues[pos], outputValues[pos], "pos: " + pos);
