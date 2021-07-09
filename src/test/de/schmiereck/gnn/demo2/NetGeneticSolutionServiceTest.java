@@ -4,19 +4,16 @@ import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 
-import de.schmiereck.gnn.GeneticSolutionService;
+import de.schmiereck.gnn.NetGeneticSolutionService;
 import de.schmiereck.gnn.Net;
 import de.schmiereck.gnn.NetFitnessCheckerService;
-import de.schmiereck.gnn.NetMutateService;
-import de.schmiereck.gnn.NetService;
-import de.schmiereck.gnn.Neuron;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GeneticSolutionServiceTest {
+public class NetGeneticSolutionServiceTest {
 
     @Test
     public void testSolveEasy() {
@@ -37,7 +34,7 @@ public class GeneticSolutionServiceTest {
         };
 
         // Act
-        final Net net = GeneticSolutionService.solve(inputArr, expectedOutputArr, rnd);
+        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert
@@ -63,7 +60,7 @@ public class GeneticSolutionServiceTest {
         };
 
         // Act
-        final Net net = GeneticSolutionService.solve(inputArr, expectedOutputArr, rnd);
+        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert

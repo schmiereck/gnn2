@@ -12,8 +12,6 @@ h
 8src/main/de/schmiereck/gnn/demo3/FuzzyNeuronService.java,1\e\1e49fe4096820b332336fe847988485e93ba859c
 z
 Jsrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_NOT_func_Test.java,5\e\5e586c79a5809400dcaf3987ec85cf9ebc50c927
-k
-;src/test/de/schmiereck/gnn/demo2/FuncNeuronServiceTest.java,f\5\f5f1fc46c60680eb2f49e852c5ef4d579846cc8a
 {
 Ksrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_XNOR_func_Test.java,4\4\44a49bce5aef2570ecb324b1cfbc59f484ec3217
 y

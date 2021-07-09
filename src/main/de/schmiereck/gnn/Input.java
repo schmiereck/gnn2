@@ -13,8 +13,8 @@ public class Input {
         this.highLimit = highLimit;
     }
 
-    public int getInput() {
-        return (this.neuron.getOutputValue() * this.weight) / HIGH_VALUE;
+    public Neuron getNeuron() {
+        return this.neuron;
     }
 
     public int getHighLimit() {
@@ -32,5 +32,9 @@ public class Input {
     public void setWeight(final int weight, final int highLimit) {
         this.weight = weight;
         this.highLimit = highLimit;
+    }
+
+    public int getInput() {
+        return (this.neuron.getOutputValue() * this.weight) / HIGH_VALUE;
     }
 }
