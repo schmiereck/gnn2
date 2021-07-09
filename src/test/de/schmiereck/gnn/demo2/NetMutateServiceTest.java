@@ -38,7 +38,7 @@ public class NetMutateServiceTest {
 
         // Act
         final NetFitnessCheckerService.FitnessData fitness1Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
-        NetMutateService.mutateNet(net, rnd);
+        NetMutateService.mutateNet(net, rnd, Neuron::new);
         final NetFitnessCheckerService.FitnessData fitness2Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert

@@ -17,6 +17,9 @@ public class Neuron {
         XNOR
     };
 
+    private int layerPos;
+    private int neuronPos;
+
     private List<Input> inputList = new ArrayList<>();
 
     private int limitValue = NULL_VALUE;
@@ -26,6 +29,22 @@ public class Neuron {
     private Func func = null;
 
     private int[] funcForceArr = new int[Func.values().length];
+
+    public void setLayerPos(final int layerPos) {
+        this.layerPos = layerPos;
+    }
+
+    public int getLayerPos() {
+        return this.layerPos;
+    }
+
+    public void setNeuronPos(final int neuronPos) {
+        this.neuronPos = neuronPos;
+    }
+
+    public int getNeuronPos() {
+        return this.neuronPos;
+    }
 
     public int getLimitValue() {
         return this.limitValue;

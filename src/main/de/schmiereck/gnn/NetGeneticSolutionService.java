@@ -16,7 +16,7 @@ public class NetGeneticSolutionService {
         }
     }
 
-    public static Net solve(final int[][] inputArr, final int[][] expectedOutputArr, final Random rnd) {
+    public static Net solve(final int[][] inputArr, final int[][] expectedOutputArr, final Random rnd, final int maxGenerations) {
         final Net retNet;
         final Net evaNet = NetService.newNet(new int[] { inputArr[0].length, expectedOutputArr[0].length }, Neuron::new);
 
@@ -26,22 +26,24 @@ public class NetGeneticSolutionService {
 
         for (int pos = 1; pos < 100; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
-            NetMutateService.mutateNet(cloneNet, rnd);
+            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new);
             populationNetList.add(new SolutionData(cloneNet));
         }
 
         final int halfSize = (populationNetList.size() / 2);
 
         int count = 0;
-        while (count < 10000) {
-            System.out.printf("count:%d\n", count);
+        while (count < maxGenerations) {
+            //System.out.printf("count:%d\n", count);
 
-            populationNetList.forEach(solutionData -> {
+            populationNetList.parallelStream().forEach(solutionData -> {
                 solutionData.fitnessData = NetFitnessCheckerService.check(solutionData.net, FuncNeuronService::calc, inputArr, expectedOutputArr);
-                System.out.printf("fitnessData.outputDiff:%d\n", solutionData.fitnessData.getOutputDiff());
+                //System.out.printf("fitnessData.outputDiff:%d\n", solutionData.fitnessData.getOutputDiff());
             });
 
             populationNetList.sort((aSolutionData, bSolutionData) -> aSolutionData.fitnessData.getOutputDiff() - bSolutionData.fitnessData.getOutputDiff());
+
+            System.out.printf("count:%d, fitnessData.outputDiff:%d\n", count, populationNetList.get(0).fitnessData.getOutputDiff());
 
             if (populationNetList.get(0).fitnessData.getOutputDiff() == 0) {
                 break;
@@ -52,10 +54,12 @@ public class NetGeneticSolutionService {
 
                 final SolutionData targetSolutionData = populationNetList.get(halfSize + pos);
                 final Net targetCloneNet = NetCloneService.clone(solutionData.net);
-                NetMutateService.mutateNet(targetCloneNet, rnd);
+                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new);
                 targetSolutionData.net = targetCloneNet;
 
-                NetMutateService.mutateNet(solutionData.net, rnd);
+                if (pos > (halfSize / 5)) {
+                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new);
+                }
             }
 
             count++;

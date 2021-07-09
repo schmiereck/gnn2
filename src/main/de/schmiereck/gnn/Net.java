@@ -1,6 +1,7 @@
 package de.schmiereck.gnn;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Net {
@@ -18,5 +19,9 @@ public class Net {
 
     public void setOutput(final int layerPos, final int neuronPos, final int outputValue) {
         getNeuron(layerPos, neuronPos).setOutputValue(outputValue);
+    }
+
+    public Layer getOutputLayer() {
+        return this.layerList.get(this.layerList.size() - 1);
     }
 }

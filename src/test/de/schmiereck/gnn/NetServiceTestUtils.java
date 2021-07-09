@@ -37,6 +37,12 @@ public class NetServiceTestUtils {
         assertEquals(1, net.getLayerList().get(0).getNeuronList().get(0).getInputList().size());
         assertEquals(1, net.getLayerList().get(0).getNeuronList().get(1).getInputList().size());
         assertEquals(2, net.getLayerList().get(1).getNeuronList().get(0).getInputList().size());
+        assertEquals(0, net.getNeuron(0, 0).getLayerPos());
+        assertEquals(0, net.getNeuron(0, 0).getNeuronPos());
+        assertEquals(0, net.getNeuron(0, 1).getLayerPos());
+        assertEquals(1, net.getNeuron(0, 1).getNeuronPos());
+        assertEquals(1, net.getNeuron(1, 0).getLayerPos());
+        assertEquals(0, net.getNeuron(1, 0).getNeuronPos());
         // Assert-Inputs:
         assertEquals(input0Value, net.getLayerList().get(0).getNeuronList().get(0).getOutputValue());
         assertEquals(input1Value, net.getLayerList().get(0).getNeuronList().get(1).getOutputValue());

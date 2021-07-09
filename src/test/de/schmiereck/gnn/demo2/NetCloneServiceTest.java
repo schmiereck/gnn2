@@ -1,9 +1,13 @@
 package de.schmiereck.gnn.demo2;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
 import de.schmiereck.gnn.Net;
 import de.schmiereck.gnn.NetCloneService;
+import de.schmiereck.gnn.NetFitnessCheckerService;
+import de.schmiereck.gnn.NetGeneticSolutionService;
 import de.schmiereck.gnn.NetService;
 import de.schmiereck.gnn.Neuron;
 import de.schmiereck.gnn.demo1.LinearNeuronService;
@@ -37,5 +41,34 @@ public class NetCloneServiceTest {
         assertEquals(LOW_D2_VALUE, retNet.getNeuron(1, 0).getInputList().get(0).getWeight());
         assertEquals(Neuron.Func.IS, retNet.getNeuron(1, 0).getFunc());
         assertEquals(HIGH_D2_VALUE, retNet.getNeuron(1, 0).getFuncForce(Neuron.Func.AND));
+    }
+
+    @Test
+    public void testCloneEasy() {
+        // Arrange
+        final Net evaNet = NetService.newNet(new int[] { 2, 1 }, Neuron::new);
+        final Random rnd = new Random(2342L);
+
+        final int[][] inputArr = {
+                { LOW_VALUE, LOW_VALUE },
+                { HIGH_VALUE, LOW_VALUE },
+                { LOW_VALUE, HIGH_VALUE },
+                { HIGH_VALUE, HIGH_VALUE }
+        };
+        final int[][] expectedOutputArr = {
+                { LOW_VALUE },
+                { NULL_VALUE },
+                { NULL_VALUE },
+                { HIGH_VALUE }
+        };
+
+        // Act
+        final NetFitnessCheckerService.FitnessData evaFitnessData = NetFitnessCheckerService.check(evaNet, FuncNeuronService::calc, inputArr, expectedOutputArr);
+        final Net cloneNet = NetCloneService.clone(evaNet);
+        final NetFitnessCheckerService.FitnessData cloneFitnessData = NetFitnessCheckerService.check(cloneNet, FuncNeuronService::calc, inputArr, expectedOutputArr);
+
+        // Assert
+        assertEquals(0, evaFitnessData.getOutputDiff());
+        assertEquals(0, cloneFitnessData.getOutputDiff());
     }
 }
