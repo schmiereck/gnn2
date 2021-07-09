@@ -23,7 +23,9 @@ public class Neuron {
 
     private int outputValue = NULL_VALUE;
 
-    private Func func = Func.IS;
+    private Func func = null;
+
+    private int[] funcForceArr = new int[Func.values().length];
 
     public int getLimitValue() {
         return this.limitValue;
@@ -51,5 +53,9 @@ public class Neuron {
 
     public void setFunc(final Func func) {
         this.func = func;
+    }
+
+    public int[] getFuncForceArr() {
+        return this.funcForceArr;
     }
 }

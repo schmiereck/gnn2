@@ -61,7 +61,7 @@ public class NetService_2_1_net_with_NAND_weights_Test {
 
         out0Neuron.getInputList().get(0).setWeight(LOW_VALUE);
         out0Neuron.getInputList().get(1).setWeight(LOW_VALUE);
-        out0Neuron.setLimitValue(HIGH_VALUE);
+        out0Neuron.setLimitValue(NULL_VALUE);
 
         return net;
     }

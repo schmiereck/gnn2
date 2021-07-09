@@ -9,14 +9,33 @@ import de.schmiereck.gnn.Input;
 import de.schmiereck.gnn.Neuron;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
-import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 
 public class FuncNeuronService {
 
     public static void calc(final Neuron neuron) {
         final int output;
-        switch (neuron.getFunc()) {
+        if (neuron.getFunc() != null) {
+            output = calcFunc(neuron, neuron.getFunc());
+        } else {
+            int funcValue = NULL_VALUE;
+            final int[] funcForceArr = neuron.getFuncForceArr();
+            for (int pos = 0; pos < funcForceArr.length; pos++) {
+                final int funcForce = funcForceArr[pos];
+                if (funcForce != NULL_VALUE) {
+                    final Neuron.Func func = Neuron.Func.values()[pos];
+                    final int funcOutput = calcFunc(neuron, func);
+                    funcValue += funcOutput * funcForce;
+                }
+            }
+            output = funcValue / HIGH_VALUE;
+        }
+        neuron.setOutputValue(output);
+    }
+
+    private static int calcFunc(final Neuron neuron, final Neuron.Func func) {
+        final int output;
+        switch (func) {
             case IS -> output = calcIsFunc(neuron);
             case NOT -> output = -calcIsFunc(neuron);
             case OR -> output = calcOrFunc(neuron);
@@ -27,7 +46,7 @@ public class FuncNeuronService {
             case XNOR -> output = -calcXorFunc(neuron);
             default -> throw new RuntimeException("Unexpected func \"" + neuron.getFunc() + "\".");
         }
-        neuron.setOutputValue(output);
+        return output;
     }
 
     /**

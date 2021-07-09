@@ -62,7 +62,7 @@ public class NetService_2_1_net_with_OR_weights_Test {
 
         out0Neuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE);
         out0Neuron.getInputList().get(1).setWeight(HIGH_VALUE, NULL_VALUE);
-        out0Neuron.setLimitValue(HIGH_D2_VALUE);
+        out0Neuron.setLimitValue(NULL_VALUE);
 
         return net;
     }

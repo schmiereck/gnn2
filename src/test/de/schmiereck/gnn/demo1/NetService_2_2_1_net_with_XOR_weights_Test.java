@@ -85,7 +85,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
 
             outNeuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE);
             outNeuron.getInputList().get(1).setWeight(HIGH_VALUE, NULL_VALUE);
-            outNeuron.setLimitValue(HIGH_D2_VALUE);
+            outNeuron.setLimitValue(NULL_VALUE);
         }
         // n1.1: NAND: /(A * B)
         {
@@ -93,7 +93,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
 
             outNeuron.getInputList().get(0).setWeight(LOW_VALUE);
             outNeuron.getInputList().get(1).setWeight(LOW_VALUE);
-            outNeuron.setLimitValue(HIGH_VALUE);
+            outNeuron.setLimitValue(NULL_VALUE);
         }
         // n2.0: AND: (A * B)
         {
