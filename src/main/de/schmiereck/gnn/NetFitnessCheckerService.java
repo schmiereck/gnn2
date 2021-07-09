@@ -2,23 +2,32 @@ package de.schmiereck.gnn;
 
 import java.util.List;
 
-import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
-import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class FitnessCheckerService {
+public class NetFitnessCheckerService {
 
     public static class FitnessData {
         int outputDiff = 0;
+        int[] outputNeuronDiff = null;
+        int[][] inputOutputNeuronDiff = null;
 
         public int getOutputDiff() {
             return this.outputDiff;
+        }
+
+        public int[] getOutputNeuronDiff() {
+            return this.outputNeuronDiff;
+        }
+
+        public int[][] getInputOutputNeuronDiff() {
+            return this.inputOutputNeuronDiff;
         }
     }
 
     public static FitnessData check(final Net net, final NetService.CalcNeuronFunction calcNeuronFunction,
             final int[][] inputArr, final int[][] expectedOutputArr) {
         final FitnessData fitnessData = new FitnessData();
+
+        fitnessData.outputNeuronDiff = new int[expectedOutputArr[0].length];
+        fitnessData.inputOutputNeuronDiff = new int[expectedOutputArr.length][expectedOutputArr[0].length];
 
         for (int inputPos = 0; inputPos < inputArr.length; inputPos++) {
             final int[] inputValueArr = inputArr[inputPos];
@@ -36,6 +45,8 @@ public class FitnessCheckerService {
             for (int outputPos = 0; outputPos < expectedOutputValueArr.length; outputPos++) {
                 final Neuron outputNeuron = outputNeuronList.get(outputPos);
                 final int outputDiff = outputNeuron.getOutputValue() - expectedOutputValueArr[outputPos];
+                fitnessData.inputOutputNeuronDiff[inputPos][outputPos] = outputDiff;
+                fitnessData.outputNeuronDiff[outputPos] += Math.abs(outputDiff);
                 fitnessData.outputDiff += Math.abs(outputDiff);
             }
         }

@@ -25,6 +25,10 @@ public class Input {
         this.weight = weight;
     }
 
+    public int getWeight() {
+        return this.weight;
+    }
+
     public void setWeight(final int weight, final int highLimit) {
         this.weight = weight;
         this.highLimit = highLimit;
