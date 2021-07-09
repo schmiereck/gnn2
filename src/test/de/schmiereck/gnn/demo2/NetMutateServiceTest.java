@@ -23,13 +23,13 @@ public class NetMutateServiceTest {
         final Net net = NetService.newNet(new int[] {2, 1 }, Neuron::new);
         final Random rnd = new Random(2342L);
 
-        final int[][] inputValueArr = {
+        final int[][] inputArr = {
                 { LOW_VALUE, LOW_VALUE },
                 { HIGH_VALUE, LOW_VALUE },
                 { LOW_VALUE, HIGH_VALUE },
                 { HIGH_VALUE, HIGH_VALUE }
         };
-        final int[][] expectedOutputValueArr = {
+        final int[][] expectedOutputArr = {
                 { LOW_VALUE },
                 { NULL_VALUE },
                 { NULL_VALUE },
@@ -37,9 +37,9 @@ public class NetMutateServiceTest {
         };
 
         // Act
-        final NetFitnessCheckerService.FitnessData fitness1Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputValueArr, expectedOutputValueArr);
+        final NetFitnessCheckerService.FitnessData fitness1Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
         NetMutateService.mutateNet(net, rnd);
-        final NetFitnessCheckerService.FitnessData fitness2Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputValueArr, expectedOutputValueArr);
+        final NetFitnessCheckerService.FitnessData fitness2Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert
         assertEquals(0, fitness1Data.getOutputDiff());
