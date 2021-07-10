@@ -13,11 +13,11 @@ public class NetMutateService {
             mutateLayer(net.getLayerList().get(layerPos), rnd);
         }
 
-        if (rnd.nextInt(100) < 20) {
+        if (rnd.nextInt(100) < 10) {
             addNewOutputLayer(net, newNeuronFunction);
         }
 
-        if ((net.getLayerList().size() > 2) && (rnd.nextInt(100) < 20)) {
+        if ((net.getLayerList().size() > 2) && (rnd.nextInt(100) < 10)) {
             addNewNeuron(net, rnd, newNeuronFunction);
         }
     }

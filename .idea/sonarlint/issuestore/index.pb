@@ -26,8 +26,6 @@ y
 Isrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_IS_func_Test.java,8\0\80fba78399395288e8f3fb2d6c11796cb04f90ab
 m
 =src/test/de/schmiereck/gnn/demo1/LinearNeuronServiceTest.java,0\4\047b9a4487002777a90e13c52693c4c5b1f54c09
-i
-9src/main/de/schmiereck/gnn/demo1/LinearNeuronService.java,2\6\263f4654a9c324c98418aca6ecbda735256526c3
 }
 Msrc/test/de/schmiereck/gnn/demo1/NetService_1x2_net_with_IS_weights_Test.java,6\5\655423956670cd0b89179d224d49f78b23eb6423
 ~
