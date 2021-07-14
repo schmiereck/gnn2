@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import de.schmiereck.gnn.demo2.FuncNeuronService;
+
+import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 
 public class NetGeneticSolutionService {
     public static class SolutionData {
@@ -28,44 +32,59 @@ public class NetGeneticSolutionService {
 
         for (int pos = 1; pos < 100; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
-            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new);
+            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, NULL_VALUE);
             populationNetList.add(new SolutionData(cloneNet));
         }
 
         int count = 0;
         while (count < maxGenerations) {
-            //System.out.printf("count:%d\n", count);
-
-            populationNetList.parallelStream().forEach(solutionData -> {
-                solutionData.fitnessData = NetFitnessCheckerService.check(solutionData.net, FuncNeuronService::calc, inputArr, expectedOutputArr);
-                //System.out.printf("fitnessData.outputDiff:%d\n", solutionData.fitnessData.getOutputDiff());
-            });
-
-            populationNetList.sort((aSolutionData, bSolutionData) -> aSolutionData.fitnessData.getOutputDiff() - bSolutionData.fitnessData.getOutputDiff());
-
-            System.out.printf("count:%d, fitnessData.outputDiff:%d\n", count, populationNetList.get(0).fitnessData.getOutputDiff());
+            foundFittestIndividuals(inputArr, expectedOutputArr, populationNetList, count);
 
             if (populationNetList.get(0).fitnessData.getOutputDiff() == 0) {
                 break;
             }
 
-            final int halfSize = (populationNetList.size() / 2);
+            generateNextGeneration(rnd, populationNetList);
 
-            populationNetList.subList(halfSize - 1, populationNetList.size() - 1).clear();
-            final List<SolutionData> newPopulationNetList = new Vector<>();
+            count++;
+        }
 
-            populationNetList.parallelStream().forEach(solutionData -> {
+        retNet = populationNetList.get(0).net;
+
+        return retNet;
+    }
+
+    private static void foundFittestIndividuals(final int[][] inputArr, final int[][] expectedOutputArr, final List<SolutionData> populationNetList, final int count) {
+        populationNetList.parallelStream().forEach(solutionData -> {
+            solutionData.fitnessData = NetFitnessCheckerService.check(solutionData.net, FuncNeuronService::calc, inputArr, expectedOutputArr);
+            //System.out.printf("fitnessData.outputDiff:%d\n", solutionData.fitnessData.getOutputDiff());
+        });
+
+        populationNetList.sort((aSolutionData, bSolutionData) -> aSolutionData.fitnessData.getOutputDiff() - bSolutionData.fitnessData.getOutputDiff());
+
+        System.out.printf("count:%d, fitnessData.outputDiff:%d%n", count, populationNetList.get(0).fitnessData.getOutputDiff());
+    }
+
+    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList) {
+        final int halfSize = (populationNetList.size() / 2);
+        populationNetList.subList(halfSize - 1, populationNetList.size() - 1).clear();
+        //final List<SolutionData> newPopulationNetList = new Vector<>();
+        final AtomicInteger listPos = new AtomicInteger(0);
+        final List<SolutionData> newPopulationNetList =
+            populationNetList.stream().map(solutionData -> {
+            //populationNetList.parallelStream().map(solutionData -> {
                  final Net targetCloneNet = NetCloneService.clone(solutionData.net);
-                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new);
+                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.outputDiff);
                 final SolutionData targetSolutionData = new SolutionData(targetCloneNet);
 
-                if (newPopulationNetList.size() > (halfSize / 5)) {
-                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new);
+                if (listPos.get() > (halfSize / 5)) {
+                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.getOutputDiff());
                 }
-                newPopulationNetList.add(targetSolutionData);
-            });
-            populationNetList.addAll(newPopulationNetList);
-
+                listPos.incrementAndGet();
+                //newPopulationNetList.add(targetSolutionData);
+                return targetSolutionData;
+            }).collect(Collectors.toList());
+        populationNetList.addAll(newPopulationNetList);
             /*
             for (int pos = 0; pos < halfSize; pos++) {
                 final SolutionData solutionData = populationNetList.get(pos);
@@ -79,12 +98,6 @@ public class NetGeneticSolutionService {
                     NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new);
                 }
             }
-*/
-            count++;
-        }
-
-        retNet = populationNetList.get(0).net;
-
-        return retNet;
+            */
     }
 }

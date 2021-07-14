@@ -36,8 +36,6 @@ Osrc/test/de/schmiereck/gnn/demo1/NetService_2_1_net_with_NAND_weights_Test.java
 Psrc/test/de/schmiereck/gnn/demo1/NetService_2_2_1_net_with_XOR_weights_Test.java,c\7\c76b289b6e9495473c4d70a130c9ae2d0badcd75
 d
 4src/test/de/schmiereck/gnn/demo1/NetServiceTest.java,d\d\dda5b29f5e0c2f7e365e26427fa44160a7419ecf
-h
-8src/main/de/schmiereck/gnn/NetFitnessCheckerService.java,2\b\2b92c8d73c23b335a3c681e03a130a3b3295009c
 z
 Jsrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_XOR_func_Test.java,2\0\20879892ca13e9f0147e02a485f39c0da0914f00
 k

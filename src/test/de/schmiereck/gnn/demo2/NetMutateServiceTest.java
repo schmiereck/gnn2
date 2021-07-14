@@ -35,10 +35,12 @@ public class NetMutateServiceTest {
                 { NULL_VALUE },
                 { HIGH_VALUE }
         };
+        final int[] outputNeuronDiff = null;
+        final int outputDiff = NULL_VALUE;
 
         // Act
         final NetFitnessCheckerService.FitnessData fitness1Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
-        NetMutateService.mutateNet(net, rnd, Neuron::new);
+        NetMutateService.mutateNet(net, rnd, Neuron::new, outputNeuronDiff, outputDiff);
         final NetFitnessCheckerService.FitnessData fitness2Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert
