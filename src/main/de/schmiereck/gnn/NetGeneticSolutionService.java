@@ -21,10 +21,16 @@ public class NetGeneticSolutionService {
         }
     }
 
-    public static Net solve(final int[][] inputArr, final int[][] expectedOutputArr, final Random rnd, final int maxGenerations) {
+    public static Net solve(final int[][] inputArr, final int[][] expectedOutputArr, final Random rnd, final int maxGenerations, final NetMutateService.MutateConfig mutateConfig,
+            final int[] neuronCountPerLayer) {
         final Net retNet;
-        //final Net evaNet = NetService.newNet(new int[] { inputArr[0].length, 3, expectedOutputArr[0].length }, Neuron::new);
-        final Net evaNet = NetService.newNet(new int[] { inputArr[0].length, expectedOutputArr[0].length }, Neuron::new);
+        final int[] initialNeuronCountPerLayer;
+        if (neuronCountPerLayer == null) {
+            initialNeuronCountPerLayer = new int[] { inputArr[0].length, expectedOutputArr[0].length };
+        } else {
+            initialNeuronCountPerLayer = neuronCountPerLayer;
+        }
+        final Net evaNet = NetService.newNet(initialNeuronCountPerLayer, Neuron::new);
 
         final List<SolutionData> populationNetList = new ArrayList<>();
 
@@ -32,19 +38,19 @@ public class NetGeneticSolutionService {
 
         for (int pos = 1; pos < 100; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
-            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, NULL_VALUE);
+            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, NULL_VALUE, mutateConfig);
             populationNetList.add(new SolutionData(cloneNet));
         }
 
         int count = 0;
-        while (count < maxGenerations) {
+        while (true) {
             foundFittestIndividuals(inputArr, expectedOutputArr, populationNetList, count);
 
-            if (populationNetList.get(0).fitnessData.getOutputDiff() == 0) {
+            if ((count >= maxGenerations) || (populationNetList.get(0).fitnessData.getOutputDiff() == 0)) {
                 break;
             }
 
-            generateNextGeneration(rnd, populationNetList);
+            generateNextGeneration(rnd, populationNetList, mutateConfig);
 
             count++;
         }
@@ -65,20 +71,20 @@ public class NetGeneticSolutionService {
         System.out.printf("count:%d, fitnessData.outputDiff:%d%n", count, populationNetList.get(0).fitnessData.getOutputDiff());
     }
 
-    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList) {
+    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList, final NetMutateService.MutateConfig mutateConfig) {
         final int halfSize = (populationNetList.size() / 2);
         populationNetList.subList(halfSize - 1, populationNetList.size() - 1).clear();
         //final List<SolutionData> newPopulationNetList = new Vector<>();
         final AtomicInteger listPos = new AtomicInteger(0);
         final List<SolutionData> newPopulationNetList =
-            populationNetList.stream().map(solutionData -> {
+            populationNetList.parallelStream().map(solutionData -> {
             //populationNetList.parallelStream().map(solutionData -> {
                  final Net targetCloneNet = NetCloneService.clone(solutionData.net);
-                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.outputDiff);
+                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.outputDiff, mutateConfig);
                 final SolutionData targetSolutionData = new SolutionData(targetCloneNet);
 
                 if (listPos.get() > (halfSize / 5)) {
-                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.getOutputDiff());
+                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.getOutputDiff(), mutateConfig);
                 }
                 listPos.incrementAndGet();
                 //newPopulationNetList.add(targetSolutionData);

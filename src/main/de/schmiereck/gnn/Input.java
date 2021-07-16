@@ -34,7 +34,7 @@ public class Input {
         this.highLimit = highLimit;
     }
 
-    public int getInput() {
+    public int getInputWithWeight() {
         return (this.neuron.getOutputValue() * this.weight) / HIGH_VALUE;
     }
 }

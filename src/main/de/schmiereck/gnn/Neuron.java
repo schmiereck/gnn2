@@ -14,7 +14,9 @@ public class Neuron {
         AND,
         NAND,
         XOR,
-        XNOR
+        XNOR,
+        //AVERAGE,
+        //THRESHOLD
     };
 
     private int layerPos;

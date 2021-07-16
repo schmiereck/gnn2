@@ -24,7 +24,7 @@ public class LinearNeuronService {
         final int average;
         if (inputs.size() > 0) {
             final int inputSum = inputs.stream().collect(Collectors.summingInt(input -> {
-                if (input.getInput() >= input.getHighLimit()) return input.getInput(); else return NULL_VALUE;
+                if (input.getInputWithWeight() >= input.getHighLimit()) return input.getInputWithWeight(); else return NULL_VALUE;
             }));
             average = inputSum / inputs.size();
         } else {
