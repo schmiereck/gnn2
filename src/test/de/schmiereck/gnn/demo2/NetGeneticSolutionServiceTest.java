@@ -142,10 +142,10 @@ public class NetGeneticSolutionServiceTest {
         mutateConfig.setUseFullFuncForce(true);
         mutateConfig.setAddNewLayers(false);
         mutateConfig.setAddNewNeurons(false);
-        final int[] neuronCountPerLayer = new int[] { 2, 3, 3, 1 };
+        final int[] neuronCountPerLayer = new int[] { 2, 3, 1 };
 
         // Act
-        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 350000*4, mutateConfig, neuronCountPerLayer);
+        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 350000*1, mutateConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         printNet(net);
@@ -155,6 +155,14 @@ public class NetGeneticSolutionServiceTest {
         // { f(IS):[[0]*10] } { f(IS):[[1]*10] }
         // { f(NOR*10):[[0]*5,[1]*-10] } { f(IS*5,AND*5):[[0]*10,[1]*10] }
         // { f(NOR*10):[[0]*10,[1]*10] }
+
+        // { f(IS):[[0]*10] } { f(IS):[[1]*10] }
+        // { f(NOR*10):[[0]*-5,[1]*10] } { f(OR*10):[[0]*10,[1]*5] } { f(AND*10):[[0]*-10,[1]*-10] }
+        // { f(NAND*10):[[0]*-10,[1]*10,[2]*-10] }
+
+        // { f(IS):[[0]*10] } { f(IS):[[1]*10] }
+        // { f(OR*10):[[0]*10,[1]*10] } { f(OR*10):[[0]*10,[1]*5] } { f(AND*10):[[0]*5,[1]*-10] }
+        // { f(OR*10):[[0]*-10,[1]*-10,[2]*10] }
     }
 
     @Test
@@ -176,7 +184,9 @@ public class NetGeneticSolutionServiceTest {
         };
         final NetMutateService.MutateConfig mutateConfig = new NetMutateService.MutateConfig();
         mutateConfig.setUseFullFuncForce(true);
-        final int[] neuronCountPerLayer = new int[] { 2, 4, 2 };
+        mutateConfig.setAddNewLayers(false);
+        mutateConfig.setAddNewNeurons(false);
+        final int[] neuronCountPerLayer = new int[] { 3, 3, 2 };
 
         // Act
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 350000*8, mutateConfig, neuronCountPerLayer);

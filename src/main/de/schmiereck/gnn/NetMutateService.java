@@ -92,9 +92,9 @@ public class NetMutateService {
             final Neuron neuron = layer.getNeuronList().get(neuronPos);
             final int neuronMutationRate;
             if (outputNeuronDiff != null) {
-                neuronMutationRate = outputNeuronDiff[neuronPos];
+                neuronMutationRate = rnd.nextInt(outputNeuronDiff[neuronPos] + 1);
             } else {
-                neuronMutationRate = HIGH_D2_VALUE;
+                neuronMutationRate = rnd.nextInt(HIGH_D2_VALUE);
             }
             mutateNeuron(neuron, rnd, neuronMutationRate, layerMutationRate, mutateConfig);
         });
