@@ -1,6 +1,4 @@
 
-U
-%src/main/de/schmiereck/gnn/Layer.java,c\f\cf07f85dfc9fa6f3887cef0bb5975c147fa9110b
 8
 gnn2.iml,0\b\0be15c93d2cbd3d583a3b89e55f287f441340b0a
 :

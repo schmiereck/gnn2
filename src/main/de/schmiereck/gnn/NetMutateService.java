@@ -29,14 +29,14 @@ public class NetMutateService {
     }
 
     public static void mutateNet(final Net net, final Random rnd, final LayerService.NewNeuronFunction newNeuronFunction,
-            final int[] outputNeuronDiff, final int outputDiff, final MutateConfig mutateConfig) {
+            final int[] outputNeuronDiff, final boolean[][] neuronFits, final MutateConfig mutateConfig) {
         final int layerListSize = net.getLayerList().size();
         final int layerMutationImpact = HIGH_VALUE / layerListSize;
         for (int layerPos = 1; layerPos < layerListSize; layerPos++) {
             boolean isOutputLayer = (layerPos == (layerListSize - 1));
             //final int layerMutationRate = layerMutationImpact * layerPos;
             final int layerMutationRate = HIGH_D2_VALUE;
-            mutateLayer(net.getLayerList().get(layerPos), rnd, isOutputLayer ? outputNeuronDiff : null, layerMutationRate, mutateConfig);
+            mutateLayer(net.getLayerList().get(layerPos), rnd, isOutputLayer ? outputNeuronDiff : null, layerMutationRate, neuronFits, mutateConfig);
         }
 
         if (mutateConfig.addNewLayers) {
@@ -86,15 +86,25 @@ public class NetMutateService {
         NetService.connectLayersPathTrough(parentLayer, newChildLayer);
     }
 
-    private static void mutateLayer(final Layer layer, final Random rnd, final int[] outputNeuronDiff, final int layerMutationRate, final MutateConfig mutateConfig) {
+    private static void mutateLayer(final Layer layer, final Random rnd, final int[] outputNeuronDiff, final int layerMutationRate, final boolean[][] neuronFits, final MutateConfig mutateConfig) {
         //layer.getNeuronList().stream().forEach(neuron -> mutateNeuron(neuron, rnd));
         IntStream.range(0, layer.getNeuronList().size()).forEach(neuronPos -> {
             final Neuron neuron = layer.getNeuronList().get(neuronPos);
             final int neuronMutationRate;
-            if (outputNeuronDiff != null) {
-                neuronMutationRate = rnd.nextInt(outputNeuronDiff[neuronPos] + 1);
+            final boolean fits;
+            if (neuronFits != null) {
+                fits = neuronFits[neuron.getLayerPos()][neuron.getNeuronPos()];
             } else {
-                neuronMutationRate = rnd.nextInt(HIGH_D2_VALUE);
+                fits = true;
+            }
+            if (fits) {
+                if (outputNeuronDiff != null) {
+                    neuronMutationRate = rnd.nextInt(outputNeuronDiff[neuronPos] + 1);
+                } else {
+                    neuronMutationRate = rnd.nextInt(HIGH_D2_VALUE);
+                }
+            } else {
+                neuronMutationRate = NULL_VALUE;
             }
             mutateNeuron(neuron, rnd, neuronMutationRate, layerMutationRate, mutateConfig);
         });

@@ -9,4 +9,8 @@ public class Layer {
     public List<Neuron> getNeuronList() {
         return this.neuronList;
     }
+
+    public int getNeuronListSize() {
+        return this.neuronList.size();
+    }
 }

@@ -34,11 +34,9 @@ public class NetGeneticSolutionService {
 
         final List<SolutionData> populationNetList = new ArrayList<>();
 
-        populationNetList.add(new SolutionData(evaNet));
-
-        for (int pos = 1; pos < 100; pos++) {
+        for (int pos = 0; pos < 100; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
-            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, NULL_VALUE, mutateConfig);
+            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, null, mutateConfig);
             populationNetList.add(new SolutionData(cloneNet));
         }
 
@@ -50,7 +48,7 @@ public class NetGeneticSolutionService {
                 break;
             }
 
-            generateNextGeneration(rnd, populationNetList, mutateConfig);
+            generateNextGeneration(rnd, populationNetList, mutateConfig, evaNet);
 
             count++;
         }
@@ -71,7 +69,7 @@ public class NetGeneticSolutionService {
         System.out.printf("count:%d, fitnessData.outputDiff:%d%n", count, populationNetList.get(0).fitnessData.getOutputDiff());
     }
 
-    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList, final NetMutateService.MutateConfig mutateConfig) {
+    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList, final NetMutateService.MutateConfig mutateConfig, final Net evaNet) {
         final int halfSize = (populationNetList.size() / 2);
         populationNetList.subList(halfSize - 1, populationNetList.size() - 1).clear();
         //final List<SolutionData> newPopulationNetList = new Vector<>();
@@ -79,12 +77,17 @@ public class NetGeneticSolutionService {
         final List<SolutionData> newPopulationNetList =
             populationNetList.parallelStream().map(solutionData -> {
             //populationNetList.parallelStream().map(solutionData -> {
-                 final Net targetCloneNet = NetCloneService.clone(solutionData.net);
-                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.outputDiff, mutateConfig);
+                final Net targetCloneNet;
+                if (listPos.get() < halfSize - 1) {
+                    targetCloneNet = NetCloneService.clone(solutionData.net);
+                } else {
+                    targetCloneNet = NetCloneService.clone(evaNet);
+                }
+                NetMutateService.mutateNet(targetCloneNet, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.neuronFits, mutateConfig);
                 final SolutionData targetSolutionData = new SolutionData(targetCloneNet);
 
                 if (listPos.get() > (halfSize / 5)) {
-                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.getOutputDiff(), mutateConfig);
+                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.neuronFits, mutateConfig);
                 }
                 listPos.incrementAndGet();
                 //newPopulationNetList.add(targetSolutionData);

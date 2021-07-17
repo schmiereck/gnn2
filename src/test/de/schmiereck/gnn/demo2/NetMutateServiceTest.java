@@ -36,17 +36,22 @@ public class NetMutateServiceTest {
                 { HIGH_VALUE }
         };
         final int[] outputNeuronDiff = null;
-        final int outputDiff = NULL_VALUE;
         final NetMutateService.MutateConfig mutateConfig = new NetMutateService.MutateConfig();
         mutateConfig.setUseFullFuncForce(false);
 
         // Act
         final NetFitnessCheckerService.FitnessData fitness1Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
-        NetMutateService.mutateNet(net, rnd, Neuron::new, outputNeuronDiff, outputDiff, mutateConfig);
+        NetMutateService.mutateNet(net, rnd, Neuron::new, outputNeuronDiff, fitness1Data.getNeuronFits(), mutateConfig);
         final NetFitnessCheckerService.FitnessData fitness2Data = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert
         assertEquals(0, fitness1Data.getOutputDiff());
-        assertEquals(17, fitness2Data.getOutputDiff());
+        assertEquals(4, fitness2Data.getOutputDiff());
+        assertEquals(true, fitness1Data.getNeuronFits()[1][0]);
+        assertEquals(true, fitness1Data.getNeuronFits()[0][0]);
+        assertEquals(true, fitness1Data.getNeuronFits()[0][1]);
+        assertEquals(false, fitness2Data.getNeuronFits()[1][0]);
+        assertEquals(false, fitness2Data.getNeuronFits()[0][0]);
+        assertEquals(false, fitness2Data.getNeuronFits()[0][1]);
     }
 }
