@@ -168,6 +168,11 @@ public class NetGeneticSolutionServiceTest {
         // { f(IS):[[0]*10] } { f(IS):[[1]*10] }
         // { f(NAND*10):[[0]*5,[1]*-10] } { f(NOR*10):[[0]*10,[1]*5] } { f(NAND*10):[[0]*-10,[1]*-10] }
         // { f(NAND*10):[[0]*10,[1]*-10,[2]*10] }
+
+        // count:87, fitnessData.outputDiff:0
+        //{ f(IS):[[0]*10] } { f(IS):[[1]*10] }
+        //{ f(AND*10):[[0]*-5,[1]*10] } { f(AND*10):[[0]*10,[1]*10] } { f(AND*10):[[0]*10,[1]*5] }
+        //{ f(NOR*10):[[0]*10,[1]*10,[2]*10] }
     }
 
     @Test
@@ -188,9 +193,9 @@ public class NetGeneticSolutionServiceTest {
                 { HIGH_VALUE, HIGH_VALUE },
         };
         final NetMutateService.MutateConfig mutateConfig = new NetMutateService.MutateConfig();
-        mutateConfig.setUseFullFuncForce(true);
-        mutateConfig.setAddNewLayers(false);
-        mutateConfig.setAddNewNeurons(false);
+        mutateConfig.setUseFullFuncForce(false);
+        mutateConfig.setAddNewLayers(true);
+        mutateConfig.setAddNewNeurons(true);
         final int[] neuronCountPerLayer = new int[] { 3, 2 };
 
         // Act
