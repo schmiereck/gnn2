@@ -1,14 +1,27 @@
 # Basics
 
-Genetische Algorithmus für das Training.
+Genetischer Algorithmus für das Training.
 1. Beweisen, dass dies funktioniert.
+
+# Definitionen
+
+Ein **Individuum** existiert in einer **Population**.
+
+In einer **Population** können **Individuen** verschiedener **Generationen** existieren.
+
+Eine **Generation** entsteht durch Mutation aus **Individuen** einer Vorgängergeneration.
+
+Ein **Individuum** reagiert auf **Reize** (**Input**) durch eine **Reaktion** (**Output**).
+Seine **Eignung** (**Fitness**) wird dadurch gemessen, inwieweit seine Reaktion mit der erwarteten Reaktion auf einen bestimmten Reiz übereinstimmt.
+
+Die Reaktionen eines Individuums auf Reize entsprechen/ bestimmen seinem Verhalten in einer **Umgebung** (**Environment**) und legen fest, wie gut er an diese Umgebung **angepasst** (**fit**) ist.
 
 # Erweiterungen
 
 1. Netz bekommt eine Sequenz als Eingabe.
-Das netz soll jeweils die nächste Eingabe erraten.
-Beim Trainingspeichert das Netzt jeweils den vorangegangenen Input (oder mehrere)
-und traniert sich selber darauf, aus dem vorangegangenen Inut den aktuellen Input korrekt 
+Das Netz soll jeweils die nächste Eingabe erraten.
+Beim Training speichert das Netz jeweils den vorangegangenen Input (oder mehrere)
+und trainiert sich selber darauf, aus dem vorangegangenen Input den aktuellen Input korrekt 
 vorherzusagen.
 2. Die Parameter den GA werden durch ein NN gesteuert, welches sich verbessert.
 

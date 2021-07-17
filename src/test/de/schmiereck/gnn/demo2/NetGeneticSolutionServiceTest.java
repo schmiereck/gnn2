@@ -196,7 +196,7 @@ public class NetGeneticSolutionServiceTest {
         mutateConfig.setUseFullFuncForce(false);
         mutateConfig.setAddNewLayers(true);
         mutateConfig.setAddNewNeurons(true);
-        final int[] neuronCountPerLayer = new int[] { 3, 2 };
+        final int[] neuronCountPerLayer = new int[] { 3, 4, 4, 2 };
 
         // Act
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 350000*8, mutateConfig, neuronCountPerLayer);
