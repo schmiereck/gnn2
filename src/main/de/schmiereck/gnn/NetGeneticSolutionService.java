@@ -10,6 +10,7 @@ import java.util.stream.IntStream;
 
 import de.schmiereck.gnn.demo2.FuncNeuronService;
 
+import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 
 public class NetGeneticSolutionService {
@@ -35,7 +36,8 @@ public class NetGeneticSolutionService {
 
         final List<SolutionData> populationNetList = new ArrayList<>();
 
-        for (int pos = 0; pos < 100; pos++) {
+        final int populationSize = 100;
+        for (int pos = 0; pos < populationSize; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
             NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, null, mutateConfig);
             populationNetList.add(new SolutionData(cloneNet));
@@ -44,29 +46,45 @@ public class NetGeneticSolutionService {
         SolutionData lastFittestSolutionData = null;
         int lastFittestOutputDiff = Integer.MAX_VALUE;
 
+        int outputRangeDiff = 0;
         int count = 0;
         while (true) {
-            foundFittestIndividuals(inputArr, expectedOutputArr, populationNetList, count);
+            //-------------------------------------------------------------------------------------
+            foundFittestIndividuals(inputArr, expectedOutputArr, populationNetList, count, outputRangeDiff);
 
             final SolutionData fittestSolutionData = populationNetList.get(0);
             int fittestOutputDiff = fittestSolutionData.fitnessData.getOutputDiff();
 
             System.out.printf("count:%d, fitnessData.outputDiff:%d%n", count, fittestOutputDiff);
 
-            if ((lastFittestSolutionData != null) && (fittestOutputDiff > lastFittestOutputDiff)) {
-                throw new RuntimeException("Unexpected deterioration.");
+            //-------------------------------------------------------------------------------------
+            if ((outputRangeDiff == 0) && (lastFittestSolutionData != null) && (fittestOutputDiff > lastFittestOutputDiff)) {
+                //throw new RuntimeException("Unexpected deterioration.");
             }
 
             lastFittestSolutionData = fittestSolutionData;
             lastFittestOutputDiff = fittestOutputDiff;
 
+            //-------------------------------------------------------------------------------------
+            int equalFittestCount = 0;
+            for (final SolutionData solutionData : populationNetList) {
+                if (solutionData.fitnessData.getOutputDiff() != fittestOutputDiff) {
+                    break;
+                }
+                equalFittestCount++;
+            }
+
+            outputRangeDiff = ((equalFittestCount * HIGH_VALUE) / populationNetList.size());
+
+            //-------------------------------------------------------------------------------------
             if ((count >= maxGenerations) || (fittestSolutionData.fitnessData.getOutputDiff() == 0)) {
                 break;
             }
-
-            generateNextGeneration(rnd, populationNetList, mutateConfig, evaNet);
+            //-------------------------------------------------------------------------------------
+            generateNextGeneration(rnd, populationNetList, mutateConfig, evaNet, equalFittestCount);
 
             count++;
+            //-------------------------------------------------------------------------------------
         }
 
         retNet = populationNetList.get(0).net;
@@ -74,16 +92,18 @@ public class NetGeneticSolutionService {
         return retNet;
     }
 
-    private static void foundFittestIndividuals(final int[][] inputArr, final int[][] expectedOutputArr, final List<SolutionData> populationNetList, final int count) {
+    private static void foundFittestIndividuals(final int[][] inputArr, final int[][] expectedOutputArr, final List<SolutionData> populationNetList, final int count, final int outputRangeDiff) {
         populationNetList.parallelStream().forEach(solutionData -> {
-            solutionData.fitnessData = NetFitnessCheckerService.check(solutionData.net, FuncNeuronService::calc, inputArr, expectedOutputArr);
+            solutionData.fitnessData = NetFitnessCheckerService.check(solutionData.net, FuncNeuronService::calc, inputArr, expectedOutputArr, outputRangeDiff);
             //System.out.printf("fitnessData.outputDiff:%d\n", solutionData.fitnessData.getOutputDiff());
         });
 
         populationNetList.sort((aSolutionData, bSolutionData) -> aSolutionData.fitnessData.getOutputDiff() - bSolutionData.fitnessData.getOutputDiff());
+        //populationNetList.sort((aSolutionData, bSolutionData) -> aSolutionData.fitnessData.getReducedOutputDiff() - bSolutionData.fitnessData.getReducedOutputDiff());
     }
 
-    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList, final NetMutateService.MutateConfig mutateConfig, final Net evaNet) {
+    private static void generateNextGeneration(final Random rnd, final List<SolutionData> populationNetList, final NetMutateService.MutateConfig mutateConfig, final Net evaNet,
+            final int equalFittestCount) {
         final int halfSize = (populationNetList.size() / 2);
         final int cloneEvaNetCount = 1;
         populationNetList.subList(halfSize, populationNetList.size()).clear();
@@ -96,11 +116,22 @@ public class NetGeneticSolutionService {
                 } else {
                     newCloneNet = NetCloneService.clone(evaNet);
                 }
-                NetMutateService.mutateNet(newCloneNet, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.neuronFits, mutateConfig);
+                
+                final boolean[][] neuronFits;
+                    final int[] outputNeuronDiff;
+                if (equalFittestCount > halfSize / 10) {
+                    neuronFits = null;
+                    outputNeuronDiff = null;
+                } else {
+                    neuronFits = solutionData.fitnessData.neuronFits;
+                    outputNeuronDiff = solutionData.fitnessData.outputNeuronDiff;
+                }
+
+                NetMutateService.mutateNet(newCloneNet, rnd, Neuron::new, outputNeuronDiff, neuronFits, mutateConfig);
                 final SolutionData newSolutionData = new SolutionData(newCloneNet);
 
                 if (solutionPos > (halfSize / 5)) {
-                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, solutionData.fitnessData.neuronFits, mutateConfig);
+                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, neuronFits, mutateConfig);
                 }
                 return newSolutionData;
             }).collect(Collectors.toList());

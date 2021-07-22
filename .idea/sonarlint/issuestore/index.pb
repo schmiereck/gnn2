@@ -32,8 +32,6 @@ k
 ;src/test/de/schmiereck/gnn/demo2/FuncNeuronServiceTest.java,f\5\f5f1fc46c60680eb2f49e852c5ef4d579846cc8a
 }
 Msrc/test/de/schmiereck/gnn/demo1/NetService_2_1_net_with_OR_weights_Test.java,5\e\5ec1dff10aaee7be4cfe96b9fc565b2d6362604c
-r
-Bsrc/test/de/schmiereck/gnn/demo2/NetFitnessCheckerServiceTest.java,b\1\b17efed9421b99b6f5dd50d61b154a5073818737
 ~
 Nsrc/test/de/schmiereck/gnn/demo1/NetService_2_1_net_with_NOR_weights_Test.java,b\0\b0cd3ce3ab7eebc415b2d79238502bcd63b28e0d
 ~

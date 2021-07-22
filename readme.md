@@ -3,6 +3,12 @@
 Genetischer Algorithmus für das Training.
 1. Beweisen, dass dies funktioniert.
 
+# ToDo
+
+Wenn Anzahl Individduen mit gleicher Fittnes ansteigt (Ausbrechen aus lokalem Optimum)
+ - den Bereich in dem die Fittnes verglichen wird reduzieren (Berge reduzieren)
+- sortieren mit Zufallszahl verknüpfen um sortierung durcheinander zu bringen.
+
 # Definitionen
 
 Ein **Individuum** existiert in einer **Population**.

@@ -13,6 +13,10 @@ public class NetFitnessCheckerService {
          */
         int outputDiff = 0;
         /**
+         * The sum of the absolute output-differences with reduced coparisation to rescue from local optimums.
+         */
+        int reducedOutputDiff = 0;
+        /**
          * The sum of the absolute output-differences for every output.
          */
         int[] outputNeuronDiff = null;
@@ -30,6 +34,10 @@ public class NetFitnessCheckerService {
             return this.outputDiff;
         }
 
+        public int getReducedOutputDiff() {
+            return this.reducedOutputDiff;
+        }
+
         public int[] getOutputNeuronDiff() {
             return this.outputNeuronDiff;
         }
@@ -45,6 +53,12 @@ public class NetFitnessCheckerService {
 
     public static FitnessData check(final Net net, final NetService.CalcNeuronFunction calcNeuronFunction,
             final int[][] inputArr, final int[][] expectedOutputArr) {
+        final int outputRangeDiff = 0;
+        return  check(net, calcNeuronFunction, inputArr, expectedOutputArr, outputRangeDiff);
+    }
+
+    public static FitnessData check(final Net net, final NetService.CalcNeuronFunction calcNeuronFunction,
+            final int[][] inputArr, final int[][] expectedOutputArr, final int outputRangeDiff) {
         final FitnessData fitnessData = new FitnessData();
 
         final int layerCount = net.getLayerList().size();
@@ -69,10 +83,12 @@ public class NetFitnessCheckerService {
 
             for (int outputPos = 0; outputPos < expectedOutputValueArr.length; outputPos++) {
                 final Neuron outputNeuron = outputNeuronList.get(outputPos);
-                final int outputDiff = outputNeuron.getOutputValue() - expectedOutputValueArr[outputPos];
-                fitnessData.inputOutputNeuronDiff[inputPos][outputPos] = outputDiff;
-                fitnessData.outputNeuronDiff[outputPos] += Math.abs(outputDiff);
-                fitnessData.outputDiff += Math.abs(outputDiff);
+                final int realOutputDiff = (outputNeuron.getOutputValue() - expectedOutputValueArr[outputPos]);
+                final int reducedOutputDiff = reduceDiff(outputRangeDiff, realOutputDiff);
+                fitnessData.inputOutputNeuronDiff[inputPos][outputPos] = realOutputDiff;
+                fitnessData.outputNeuronDiff[outputPos] += Math.abs(realOutputDiff);
+                fitnessData.outputDiff += Math.abs(realOutputDiff);
+                fitnessData.reducedOutputDiff += Math.abs(reducedOutputDiff);
             }
         }
 
@@ -84,6 +100,28 @@ public class NetFitnessCheckerService {
             }
         }
         return fitnessData;
+    }
+
+    private static int reduceDiff(final int outputRangeDiff, final int value) {
+        final int retValue;
+        if (value > 0) {
+            if (value <= outputRangeDiff) {
+                retValue = 0;
+            } else {
+                retValue = value - outputRangeDiff;
+            }
+        } else {
+            if (value < 0) {
+                if (value <= -outputRangeDiff) {
+                    retValue = 0;
+                } else {
+                    retValue = value + outputRangeDiff;
+                }
+            } else {
+                retValue = 0;
+            }
+        }
+        return retValue;
     }
 
     private static void fitNeuronsInInputPath(final FitnessData fitnessData, final Neuron neuron) {
