@@ -10,7 +10,7 @@ import de.schmiereck.gnn.Neuron;
  * Linear Neurons with input-limits and without reinforcement.
  */
 public class LinearNeuronService {
-    public static final int HIGH_VALUE = 10;
+    public static final int HIGH_VALUE = 100;
     public static final int NULL_VALUE = 0;
     public static final int LOW_VALUE = -HIGH_VALUE;
     public static final int HIGH_D2_VALUE = HIGH_VALUE / 2;

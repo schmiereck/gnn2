@@ -140,14 +140,14 @@ public class NetGeneticSolutionServiceTest {
                 { LOW_VALUE }
         };
         final NetMutateService.MutateConfig mutateConfig = new NetMutateService.MutateConfig();
-        mutateConfig.setUseFullFuncForce(false);
+        mutateConfig.setUseFullFuncForce(true);
         mutateConfig.setAddNewLayers(true);
         mutateConfig.setAddNewNeurons(true);
         mutateConfig.setUseBackLock(false);
         final int[] neuronCountPerLayer = new int[] { inputArr[0].length, expectedOutputArr[0].length };
 
         // Act
-        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 20000*4, mutateConfig, neuronCountPerLayer);
+        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 200000*4, mutateConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         printNet(net);
@@ -239,7 +239,7 @@ public class NetGeneticSolutionServiceTest {
         mutateConfig.setUseFullFuncForce(true);
         mutateConfig.setAddNewLayers(false);
         mutateConfig.setAddNewNeurons(false);
-        //useBackLock(true)
+        mutateConfig.setUseBackLock(false);
         final int[] neuronCountPerLayer = new int[] { 3, 3, 3, 1 };
 
         // Act
@@ -333,14 +333,14 @@ public class NetGeneticSolutionServiceTest {
                 { HIGH_VALUE, HIGH_VALUE },
         };
         final NetMutateService.MutateConfig mutateConfig = new NetMutateService.MutateConfig();
-        mutateConfig.setUseFullFuncForce(false);
-        mutateConfig.setAddNewLayers(true);
-        mutateConfig.setAddNewNeurons(true);
+        mutateConfig.setUseFullFuncForce(true);
+        mutateConfig.setAddNewLayers(false);
+        mutateConfig.setAddNewNeurons(false);
         mutateConfig.setUseBackLock(false);
         final int[] neuronCountPerLayer = new int[] { 3, 4, 5, 2 };
 
         // Act
-        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 250000*6, mutateConfig, neuronCountPerLayer);
+        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 250000*6*2, mutateConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         printNet(net);

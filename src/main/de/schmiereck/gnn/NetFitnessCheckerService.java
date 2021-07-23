@@ -25,10 +25,11 @@ public class NetFitnessCheckerService {
          */
         int[][] inputOutputNeuronDiff = null;
         /**
-         * true if the neuron output fits for all outputs.
+         * {@link de.schmiereck.gnn.demo1.LinearNeuronService#NULL_VALUE} if the neuron output fits for all outputs.
+         * {@link de.schmiereck.gnn.demo1.LinearNeuronService#HIGH_VALUE} if the neuron output doues not fits for all outputs.
          * Array positions refers to layers and neuron positions.
          */
-        boolean[][] neuronFits;
+        int[][] neuronFits;
 
         public int getOutputDiff() {
             return this.outputDiff;
@@ -46,7 +47,7 @@ public class NetFitnessCheckerService {
             return this.inputOutputNeuronDiff;
         }
 
-        public boolean[][] getNeuronFits() {
+        public int[][] getNeuronFits() {
             return this.neuronFits;
         }
     }
@@ -66,7 +67,7 @@ public class NetFitnessCheckerService {
         fitnessData.outputNeuronDiff = new int[outputLayerSize];
         fitnessData.inputOutputNeuronDiff = new int[expectedOutputArr.length][outputLayerSize];
         final Layer maxNeuronListSizeLayer = net.getLayerList().stream().max(Comparator.comparing(Layer::getNeuronListSize)).get();
-        fitnessData.neuronFits = new boolean[net.getLayerList().size()][maxNeuronListSizeLayer.getNeuronListSize()];
+        fitnessData.neuronFits = new int[net.getLayerList().size()][maxNeuronListSizeLayer.getNeuronListSize()];
 
         for (int inputPos = 0; inputPos < inputArr.length; inputPos++) {
             final int[] inputValueArr = inputArr[inputPos];
@@ -93,11 +94,16 @@ public class NetFitnessCheckerService {
         }
 
         for (int outputPos = 0; outputPos < outputLayerSize; outputPos++) {
-            if (fitnessData.outputNeuronDiff[outputPos] == NULL_VALUE) {
-                final int layerPos = layerCount - 1;
-                final int neuronPos = outputPos;
-                fitNeuronsInInputPath(fitnessData, net.getNeuron(layerPos, neuronPos));
-            }
+            fitnessData.outputNeuronDiff[outputPos] /= inputArr.length;
+            fitnessData.outputDiff /= inputArr.length;
+            fitnessData.reducedOutputDiff /= inputArr.length;
+        }
+
+        for (int outputPos = 0; outputPos < outputLayerSize; outputPos++) {
+            final int outputNeuronDiff = fitnessData.outputNeuronDiff[outputPos];
+            final int layerPos = layerCount - 1;
+            final int neuronPos = outputPos;
+            fitNeuronsInInputPath(fitnessData, net.getNeuron(layerPos, neuronPos), outputNeuronDiff);
         }
         return fitnessData;
     }
@@ -124,14 +130,14 @@ public class NetFitnessCheckerService {
         return retValue;
     }
 
-    private static void fitNeuronsInInputPath(final FitnessData fitnessData, final Neuron neuron) {
-        fitnessData.neuronFits[neuron.getLayerPos()][neuron.getNeuronPos()] = true;
+    private static void fitNeuronsInInputPath(final FitnessData fitnessData, final Neuron neuron, final int outputNeuronDiff) {
+        fitnessData.neuronFits[neuron.getLayerPos()][neuron.getNeuronPos()] = outputNeuronDiff;
 
         neuron.getInputList().stream().forEach(input -> {
             if (input.getWeight() != NULL_VALUE) {
                 final Neuron inputNeuron = input.getNeuron();
                 if (inputNeuron != neuron) {
-                    fitNeuronsInInputPath(fitnessData, inputNeuron);
+                    fitNeuronsInInputPath(fitnessData, inputNeuron, outputNeuronDiff);
                 }
             }
         });

@@ -39,7 +39,7 @@ public class NetGeneticSolutionService {
         final int populationSize = 100;
         for (int pos = 0; pos < populationSize; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
-            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, null, mutateConfig);
+            NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, mutateConfig);
             populationNetList.add(new SolutionData(cloneNet));
         }
 
@@ -108,34 +108,43 @@ public class NetGeneticSolutionService {
         final int cloneEvaNetCount = 1;
         populationNetList.subList(halfSize, populationNetList.size()).clear();
         final List<SolutionData> newPopulationNetList =
-                IntStream.range(0, populationNetList.size()).boxed().parallel().map(solutionPos -> {
-                    final SolutionData solutionData = populationNetList.get(solutionPos);
+            IntStream.range(0, populationNetList.size()).boxed().parallel().map(solutionPos -> {
+                //---------------------------------------------------------------------------------
+                final SolutionData solutionData = populationNetList.get(solutionPos);
+                //---------------------------------------------------------------------------------
                 final Net newCloneNet;
                 if (solutionPos < (halfSize - cloneEvaNetCount)) {
-                    newCloneNet = NetCloneService.clone(solutionData.net);
+                    if (isNetInEqualFittestCountRange(solutionPos, equalFittestCount)) {
+                        newCloneNet = NetCloneService.clone(evaNet);
+                    } else {
+                        newCloneNet = NetCloneService.clone(solutionData.net);
+                    }
                 } else {
                     newCloneNet = NetCloneService.clone(evaNet);
                 }
-                
-                final boolean[][] neuronFits;
-                    final int[] outputNeuronDiff;
+                //---------------------------------------------------------------------------------
+                final int[][] neuronFits;
                 if (equalFittestCount > halfSize / 10) {
                     neuronFits = null;
-                    outputNeuronDiff = null;
                 } else {
                     neuronFits = solutionData.fitnessData.neuronFits;
-                    outputNeuronDiff = solutionData.fitnessData.outputNeuronDiff;
                 }
-
-                NetMutateService.mutateNet(newCloneNet, rnd, Neuron::new, outputNeuronDiff, neuronFits, mutateConfig);
+                //---------------------------------------------------------------------------------
+                NetMutateService.mutateNet(newCloneNet, rnd, Neuron::new, neuronFits, mutateConfig);
                 final SolutionData newSolutionData = new SolutionData(newCloneNet);
 
+                //---------------------------------------------------------------------------------
                 if (solutionPos > (halfSize / 5)) {
-                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, solutionData.fitnessData.outputNeuronDiff, neuronFits, mutateConfig);
+                    NetMutateService.mutateNet(solutionData.net, rnd, Neuron::new, neuronFits, mutateConfig);
                 }
+                //---------------------------------------------------------------------------------
                 return newSolutionData;
             }).collect(Collectors.toList());
 
         populationNetList.addAll(newPopulationNetList);
+    }
+
+    private static boolean isNetInEqualFittestCountRange(final int solutionPos, final int equalFittestCount) {
+        return (solutionPos > (equalFittestCount / 2)) && (solutionPos < equalFittestCount);
     }
 }

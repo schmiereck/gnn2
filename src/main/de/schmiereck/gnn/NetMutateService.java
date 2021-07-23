@@ -34,11 +34,12 @@ public class NetMutateService {
     }
 
     public static void mutateNet(final Net net, final Random rnd, final LayerService.NewNeuronFunction newNeuronFunction,
-            final int[] outputNeuronDiff, final boolean[][] neuronFits, final MutateConfig mutateConfig) {
+            final int[][] neuronFits, final MutateConfig mutateConfig) {
         final int layerListSize = net.getLayerList().size();
         for (int layerPos = 1; layerPos < layerListSize; layerPos++) {
             boolean isOutputLayer = (layerPos == (layerListSize - 1));
-            mutateLayer(net.getLayerList().get(layerPos), rnd, isOutputLayer ? outputNeuronDiff : null, neuronFits, mutateConfig);
+
+            mutateLayer(net.getLayerList().get(layerPos), rnd, neuronFits, mutateConfig);
         }
 
         if (mutateConfig.addNewLayers) {
@@ -55,17 +56,17 @@ public class NetMutateService {
     }
 
     private static void addNewNeuron(final Net net, final Random rnd, final LayerService.NewNeuronFunction newNeuronFunction) {
-        final int layerPos = rnd.nextInt(net.getLayerList().size() - 2) + 1;
-        final Layer layer = net.getLayerList().get(layerPos);
+        final int newLayerPos = rnd.nextInt(net.getLayerList().size() - 2) + 1;
+        final Layer layer = net.getLayerList().get(newLayerPos);
         final int newNeuronPos = layer.getNeuronList().size();
 
-        final Neuron newNeuron = LayerService.newNeuron(layerPos, newNeuronPos, newNeuronFunction);
+        final Neuron newNeuron = LayerService.newNeuron(newLayerPos, newNeuronPos, newNeuronFunction);
         newNeuron.setFuncForce(Neuron.Func.IS, HIGH_VALUE);
 
         layer.getNeuronList().add(newNeuron);
 
-        final int parentLayerPos = layerPos - 1;
-        final int childLayerPos = layerPos + 1;
+        final int parentLayerPos = newLayerPos - 1;
+        final int childLayerPos = newLayerPos + 1;
 
         final Layer parentLayer = net.getLayerList().get(parentLayerPos);
         parentLayer.getNeuronList().stream().forEach((parentNeuron -> {
@@ -88,31 +89,22 @@ public class NetMutateService {
         NetService.connectLayersPathTrough(parentLayer, newChildLayer);
     }
 
-    private static void mutateLayer(final Layer layer, final Random rnd, final int[] outputNeuronDiff, final boolean[][] neuronFits, final MutateConfig mutateConfig) {
+    private static void mutateLayer(final Layer layer, final Random rnd, final int[][] neuronFits, final MutateConfig mutateConfig) {
         //layer.getNeuronList().stream().forEach(neuron -> mutateNeuron(neuron, rnd));
         IntStream.range(0, layer.getNeuronList().size()).forEach(neuronPos -> {
             final Neuron neuron = layer.getNeuronList().get(neuronPos);
             final int neuronMutationRate;
             if (mutateConfig.useBackLock) {
-                final boolean neuronOutputsFits;
                 if (neuronFits != null) {
-                    neuronOutputsFits = neuronFits[neuron.getLayerPos()][neuron.getNeuronPos()];
+                    neuronMutationRate = neuronFits[neuron.getLayerPos()][neuron.getNeuronPos()];
                 } else {
-                    neuronOutputsFits = true;
-                }
-                if (neuronOutputsFits) {
-                    neuronMutationRate = NULL_VALUE;
-                } else {
-                    if (outputNeuronDiff != null) {
-                        neuronMutationRate = outputNeuronDiff[neuronPos];
-                    } else {
-                        neuronMutationRate = HIGH_VALUE;
-                    }
+                    neuronMutationRate = HIGH_VALUE;
                 }
             } else {
                 neuronMutationRate = HIGH_VALUE;
             }
             mutateNeuron(neuron, rnd, neuronMutationRate, mutateConfig);
+            mutateInputs(neuron, rnd, neuronMutationRate, mutateConfig);
         });
     }
 
@@ -133,6 +125,9 @@ public class NetMutateService {
                 funcForceArr[writePos] += funcForceDiff;
             }
         }
+    }
+
+    private static void mutateInputs(final Neuron neuron, final Random rnd, final int neuronMutationRate, final MutateConfig mutateConfig) {
         neuron.getInputList().stream().forEach(input -> mutateInput(input, rnd, neuronMutationRate));
     }
 

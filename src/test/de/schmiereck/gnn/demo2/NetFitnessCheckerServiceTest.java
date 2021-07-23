@@ -61,9 +61,9 @@ public class NetFitnessCheckerServiceTest {
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
         // Assert
-        assertEquals(30, fitnessData.getOutputDiff());
+        assertEquals(7, fitnessData.getOutputDiff());
 
-        assertEquals(30, fitnessData.getOutputNeuronDiff()[0]);
+        assertEquals(7, fitnessData.getOutputNeuronDiff()[0]);
 
         assertEquals(0, fitnessData.getInputOutputNeuronDiff()[0][0]);
         assertEquals(10, fitnessData.getInputOutputNeuronDiff()[1][0]);

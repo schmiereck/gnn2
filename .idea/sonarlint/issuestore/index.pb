@@ -50,3 +50,5 @@ c
 3src/test/de/schmiereck/gnn/NetServiceTestUtils.java,5\2\520f9945a70fe3b527f6ddc6fd0d63eb103bd1e4
 }
 Msrc/test/de/schmiereck/gnn/demo1/NetService_1x2_net_with_IS_weights_Test.java,6\5\655423956670cd0b89179d224d49f78b23eb6423
+U
+%src/main/de/schmiereck/gnn/Layer.java,c\f\cf07f85dfc9fa6f3887cef0bb5975c147fa9110b
