@@ -21,7 +21,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         final Net net = arrange_real_2_2_1_net_with_XOR_weights(LOW_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net, LinearNeuronService::calc);
+        NetService.calcNet(net, LinearNeuronService::calc);
 
         // Assert
         assert_real_2_2_1_net(net, LOW_VALUE, LOW_VALUE, NULL_VALUE);
@@ -33,7 +33,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         final Net net = arrange_real_2_2_1_net_with_XOR_weights(HIGH_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net, LinearNeuronService::calc);
+        NetService.calcNet(net, LinearNeuronService::calc);
 
         // Assert
         // n1.0: OR: (A + B)
@@ -50,7 +50,7 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         final Net net = arrange_real_2_2_1_net_with_XOR_weights(HIGH_VALUE, HIGH_VALUE);
 
         // Act
-        NetService.calc(net, LinearNeuronService::calc);
+        NetService.calcNet(net, LinearNeuronService::calc);
 
         // Assert
         // n1.0: OR: (A + B)
@@ -83,8 +83,8 @@ public class NetService_2_2_1_net_with_XOR_weights_Test {
         {
             final Neuron outNeuron = net.getLayerList().get(1).getNeuronList().get(0);
 
-            outNeuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE);
-            outNeuron.getInputList().get(1).setWeight(HIGH_VALUE, NULL_VALUE);
+            outNeuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE, HIGH_VALUE);
+            outNeuron.getInputList().get(1).setWeight(HIGH_VALUE, NULL_VALUE, HIGH_VALUE);
             outNeuron.setLimitValue(NULL_VALUE);
         }
         // n1.1: NAND: /(A * B)

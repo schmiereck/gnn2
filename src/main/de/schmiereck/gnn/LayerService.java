@@ -26,7 +26,7 @@ public class LayerService {
         return neuron;
     }
 
-    public static void calc(final Layer layer, final NetService.CalcNeuronFunction calcNeuronFunction) {
+    public static void calcLayer(final Layer layer, final NetService.CalcNeuronFunction calcNeuronFunction) {
         layer.getNeuronList().stream().forEach(calcNeuronFunction::calcNeuron);
     }
 }

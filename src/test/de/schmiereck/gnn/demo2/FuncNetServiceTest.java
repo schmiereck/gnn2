@@ -21,7 +21,7 @@ public class FuncNetServiceTest {
         final Net net = new Net();
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assertEquals(0, net.getLayerList().size());
@@ -33,7 +33,7 @@ public class FuncNetServiceTest {
         final Net net = NetService.newNet(new int[] { 1 }, Neuron::new);
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assertEquals(1, net.getLayerList().size());
@@ -48,7 +48,7 @@ public class FuncNetServiceTest {
         //net.getNeuron(1, 0).setFuncForce(Neuron.Func.IS, HIGH_VALUE);
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assert_1x2_net(net, HIGH_VALUE, HIGH_VALUE);
@@ -62,7 +62,7 @@ public class FuncNetServiceTest {
         net.setOutput(0, 1, NULL_VALUE);
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, NULL_VALUE, HIGH_D2_VALUE, HIGH_D2_VALUE);
@@ -76,7 +76,7 @@ public class FuncNetServiceTest {
         net.setOutput(0, 1, LOW_VALUE);
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, LOW_VALUE, NULL_VALUE, NULL_VALUE);
@@ -90,7 +90,7 @@ public class FuncNetServiceTest {
         net.setOutput(0, 1, HIGH_VALUE);
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE, HIGH_VALUE);
@@ -102,7 +102,7 @@ public class FuncNetServiceTest {
         final Net net = arrange_real_2x2_net(HIGH_VALUE, LOW_VALUE);
 
         // Act
-        NetService.calc(net, FuncNeuronService::calc);
+        NetService.calcNet(net, FuncNeuronService::calc);
 
         // Assert
         assert_2x2_net_with_count_weights(net, HIGH_VALUE, LOW_VALUE, HIGH_D2_VALUE, NULL_VALUE);
@@ -116,8 +116,8 @@ public class FuncNetServiceTest {
         final Neuron out0Neuron = net.getLayerList().get(1).getNeuronList().get(0);
         final Neuron out1Neuron = net.getLayerList().get(1).getNeuronList().get(1);
 
-        out0Neuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE);
-        out0Neuron.getInputList().get(1).setWeight(NULL_VALUE, NULL_VALUE);
+        out0Neuron.getInputList().get(0).setWeight(HIGH_VALUE, NULL_VALUE, HIGH_VALUE);
+        out0Neuron.getInputList().get(1).setWeight(NULL_VALUE, NULL_VALUE, HIGH_VALUE);
         out0Neuron.setLimitValue(HIGH_D2_VALUE);
         return net;
     }

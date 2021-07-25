@@ -76,7 +76,7 @@ public class NetFitnessCheckerService {
             for (int inputValuePos = 0; inputValuePos < inputValueArr.length; inputValuePos++) {
                 net.setOutput(0, inputValuePos, inputValueArr[inputValuePos]);
             }
-            NetService.calc(net, calcNeuronFunction);
+            NetService.calcNet(net, calcNeuronFunction);
 
             final List<Layer> layerList = net.getLayerList();
             final Layer outputLayer = layerList.get(layerList.size() - 1);

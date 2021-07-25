@@ -36,7 +36,7 @@ public class NetGeneticSolutionService {
 
         final List<SolutionData> populationNetList = new ArrayList<>();
 
-        final int populationSize = 100;
+        final int populationSize = 1000;
         for (int pos = 0; pos < populationSize; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
             NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, mutateConfig);

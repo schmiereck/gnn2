@@ -6,6 +6,7 @@ import de.schmiereck.gnn.Input;
 import de.schmiereck.gnn.Neuron;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
+import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +20,7 @@ public class FuncNeuronService_calc_IS_func_Test {
 
         inNeuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.IS);
 
         // Act
@@ -30,12 +31,30 @@ public class FuncNeuronService_calc_IS_func_Test {
     }
 
     @Test
+    public void test_calc_between_input_IS_func() {
+        // Arrange
+        final Neuron inNeuron = new Neuron();
+        final Neuron neuron = new Neuron();
+
+        inNeuron.setOutputValue(-7);
+
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, LOW_VALUE, HIGH_VALUE));
+        neuron.setFunc(Neuron.Func.IS);
+
+        // Act
+        FuncNeuronService.calc(neuron);
+
+        // Assert
+        assertEquals(-7, neuron.getOutputValue());
+    }
+
+    @Test
     public void test_calc_IS_func() {
         // Arrange
         final Neuron inNeuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.IS);
 
         final int[] input0Values = { -10, -7, -5, -2, 0, 2, 5, 7, 10 };
@@ -51,7 +70,33 @@ public class FuncNeuronService_calc_IS_func_Test {
 
         // Assert
         for (int pos = 0; pos < input0Values.length; pos++) {
-            assertEquals(expectedValues[pos], outputValues[pos]);
+            assertEquals(expectedValues[pos], outputValues[pos], "pos: " + pos);
+        }
+    }
+
+    @Test
+    public void test_calc_IS_func_with_limits() {
+        // Arrange
+        final Neuron inNeuron = new Neuron();
+        final Neuron neuron = new Neuron();
+
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, -7, 6));
+        neuron.setFunc(Neuron.Func.IS);
+
+        final int[] input0Values = { -10, -7, -5, -2, 0, 2, 5, 7, 10 };
+        final int[] expectedValues = { -10, -10, -5, -2, 0, 2, 5, 10, 10 };
+        final int[] outputValues = new int[input0Values.length];
+
+        // Act
+        for (int pos = 0; pos < input0Values.length; pos++) {
+            inNeuron.setOutputValue(input0Values[pos]);
+            FuncNeuronService.calc(neuron);
+            outputValues[pos] = neuron.getOutputValue();
+        }
+
+        // Assert
+        for (int pos = 0; pos < input0Values.length; pos++) {
+            assertEquals(expectedValues[pos], outputValues[pos], "pos: " + pos);
         }
     }
 

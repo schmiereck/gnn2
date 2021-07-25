@@ -33,7 +33,7 @@ public class LinearNeuronServiceTest {
 
         inNeuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
 
         // Act
         LinearNeuronService.calc(neuron);
@@ -52,8 +52,8 @@ public class LinearNeuronServiceTest {
         in1Neuron.setOutputValue(HIGH_VALUE);
         in2Neuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
 
         // Act
         LinearNeuronService.calc(neuron);
@@ -72,8 +72,8 @@ public class LinearNeuronServiceTest {
         in1Neuron.setOutputValue(HIGH_VALUE);
         in2Neuron.setOutputValue(HIGH_D2_VALUE);
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
 
         // Act
         LinearNeuronService.calc(neuron);
@@ -92,8 +92,8 @@ public class LinearNeuronServiceTest {
         in1Neuron.setOutputValue(HIGH_VALUE);
         in2Neuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_D2_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_D2_VALUE, NULL_VALUE, HIGH_VALUE));
 
         // Act
         LinearNeuronService.calc(neuron);
@@ -110,7 +110,7 @@ public class LinearNeuronServiceTest {
 
         inNeuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
 
         neuron.setLimitValue(HIGH_D2_VALUE);
 
@@ -129,7 +129,7 @@ public class LinearNeuronServiceTest {
 
         inNeuron.setOutputValue(HIGH_D2_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE, HIGH_VALUE));
 
         neuron.setLimitValue(HIGH_VALUE);
 

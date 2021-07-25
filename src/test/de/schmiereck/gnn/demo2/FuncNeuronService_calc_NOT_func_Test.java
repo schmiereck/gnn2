@@ -20,7 +20,7 @@ public class FuncNeuronService_calc_NOT_func_Test {
 
         inNeuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.NOT);
 
         // Act
@@ -38,7 +38,7 @@ public class FuncNeuronService_calc_NOT_func_Test {
 
         inNeuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, LOW_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, LOW_VALUE, NULL_VALUE, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.NOT);
 
         // Act
@@ -56,7 +56,7 @@ public class FuncNeuronService_calc_NOT_func_Test {
 
         inNeuron.setOutputValue(HIGH_VALUE);
 
-        neuron.getInputList().add(new Input(inNeuron, NULL_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, NULL_VALUE, NULL_VALUE, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.NOT);
 
         // Act
@@ -72,7 +72,7 @@ public class FuncNeuronService_calc_NOT_func_Test {
         final Neuron inNeuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(inNeuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.NOT);
 
         final int[] input0Values = { -10, -7, -5, -2, 0, 2, 5, 7, 10 };

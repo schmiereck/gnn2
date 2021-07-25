@@ -1,7 +1,6 @@
 package de.schmiereck.gnn;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
-import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 
 public class NetService {
@@ -29,7 +28,7 @@ public class NetService {
 
     private static void connectInputLayerInternally(final Layer inLayer) {
         inLayer.getNeuronList().stream().forEach((inNeuron -> {
-            inNeuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, LOW_VALUE));
+            inNeuron.getInputList().add(new Input(inNeuron, HIGH_VALUE));
             inNeuron.setFunc(Neuron.Func.IS);
         }));
     }
@@ -39,7 +38,7 @@ public class NetService {
             outNeuron.setFuncForce(Neuron.Func.IS, HIGH_VALUE);
 
             inLayer.getNeuronList().stream().forEach((inNeuron -> {
-                outNeuron.getInputList().add(new Input(inNeuron, HIGH_VALUE, LOW_VALUE));
+                outNeuron.getInputList().add(new Input(inNeuron, HIGH_VALUE));
            }));
         }));
     }
@@ -55,12 +54,12 @@ public class NetService {
                 } else {
                      weight = NULL_VALUE;
                  }
-                childNeuron.getInputList().add(new Input(parentNeuron, weight, LOW_VALUE));
+                childNeuron.getInputList().add(new Input(parentNeuron, weight));
            }));
         }));
     }
 
-    public static void calc(final Net net, final NetService.CalcNeuronFunction calcNeuronFunction) {
-        net.getLayerList().stream().forEach((layer) -> LayerService.calc(layer, calcNeuronFunction));
+    public static void calcNet(final Net net, final NetService.CalcNeuronFunction calcNeuronFunction) {
+        net.getLayerList().stream().forEach((layer) -> LayerService.calcLayer(layer, calcNeuronFunction));
     }
 }

@@ -19,7 +19,7 @@ public class NetService_1x2_net_with_NOT_weights_Test {
         final Net net = arrange_1x2_net_H_with_NOT_weights(HIGH_VALUE);
 
         // Act
-        NetService.calc(net, LinearNeuronService::calc);
+        NetService.calcNet(net, LinearNeuronService::calc);
 
         // Assert
         assert_1x2_net(net, HIGH_VALUE, LOW_VALUE);
@@ -31,7 +31,7 @@ public class NetService_1x2_net_with_NOT_weights_Test {
         final Net net = arrange_1x2_net_H_with_NOT_weights(LOW_VALUE);
 
         // Act
-        NetService.calc(net, LinearNeuronService::calc);
+        NetService.calcNet(net, LinearNeuronService::calc);
 
         // Assert
         assert_1x2_net(net, LOW_VALUE, HIGH_VALUE);
@@ -43,7 +43,7 @@ public class NetService_1x2_net_with_NOT_weights_Test {
         final Net net = arrange_1x2_net_H_with_NOT_weights(NULL_VALUE);
 
         // Act
-        NetService.calc(net, LinearNeuronService::calc);
+        NetService.calcNet(net, LinearNeuronService::calc);
 
         // Assert
         assert_1x2_net(net, NULL_VALUE, NULL_VALUE);

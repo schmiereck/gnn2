@@ -6,8 +6,10 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import de.schmiereck.gnn.Input;
+import de.schmiereck.gnn.InputService;
 import de.schmiereck.gnn.Neuron;
 
+import static de.schmiereck.gnn.InputService.getInputWithWeight;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.LOW_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
@@ -63,7 +65,7 @@ public class FuncNeuronService {
         final int average;
         if (inputs.size() > 0) {
             final int inputSum = inputs.stream().collect(Collectors.summingInt(input -> {
-                return input.getInputWithWeight();
+                return getInputWithWeight(input);
             }));
             average = inputSum / inputs.size();
         } else {
@@ -90,7 +92,7 @@ public class FuncNeuronService {
             for (int inputPos = 0; inputPos < inputs.size(); inputPos++) {
                 final Input input = inputs.get(inputPos);
                 if (input.getWeight() != NULL_VALUE) {
-                    inputSum += input.getInputWithWeight();
+                    inputSum += getInputWithWeight(input);
                     inputCount++;
                 }
             }
@@ -135,8 +137,8 @@ public class FuncNeuronService {
         final List<Input> inputs = neuron.getInputList();
         final int maxInputValue;
         if (inputs.size() > 0) {
-            final Input maxInput = inputs.stream().max(Comparator.comparing(Input::getInputWithWeight)).orElseThrow(NoSuchElementException::new);;
-            maxInputValue = maxInput.getInputWithWeight();
+            final Input maxInput = inputs.stream().max(Comparator.comparing(InputService::getInputWithWeight)).orElseThrow(NoSuchElementException::new);;
+            maxInputValue = getInputWithWeight(maxInput);
         } else {
             maxInputValue = NULL_VALUE;
         }
@@ -153,8 +155,8 @@ public class FuncNeuronService {
         final List<Input> inputs = neuron.getInputList();
         final int minInputValue;
         if (inputs.size() > 0) {
-            final Input minInput = inputs.stream().min(Comparator.comparing(Input::getInputWithWeight)).orElseThrow(NoSuchElementException::new);;
-            minInputValue = minInput.getInputWithWeight();
+            final Input minInput = inputs.stream().min(Comparator.comparing(InputService::getInputWithWeight)).orElseThrow(NoSuchElementException::new);;
+            minInputValue = getInputWithWeight(minInput);
         } else {
             minInputValue = NULL_VALUE;
         }
@@ -183,11 +185,11 @@ public class FuncNeuronService {
         final List<Input> inputs = neuron.getInputList();
         final int inputValue;
         if (inputs.size() > 0) {
-            int lastOutputValue = inputs.get(0).getInputWithWeight();
+            int lastOutputValue = getInputWithWeight(inputs.get(0));
             for (int pos = 1; pos < inputs.size(); pos++) {
                 final Input input = inputs.get(pos);
                 final int a = lastOutputValue;
-                final int b = input.getInputWithWeight();
+                final int b = getInputWithWeight(input);
                 int value;
                 if ((a > b) && (a < complementValue(b))) {
                     value = a;

@@ -19,8 +19,8 @@ public class FuncNeuronService_calc_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.AND);
 
         in1Neuron.setOutputValue(HIGH_VALUE);
@@ -40,8 +40,8 @@ public class FuncNeuronService_calc_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.AND);
 
         in1Neuron.setOutputValue(HIGH_VALUE);
@@ -61,8 +61,8 @@ public class FuncNeuronService_calc_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.AND);
 
         in1Neuron.setOutputValue(LOW_VALUE);
@@ -82,8 +82,8 @@ public class FuncNeuronService_calc_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.setFunc(Neuron.Func.AND);
 
         final int[] input0Values   = { -10,  -7,  -5, -2,  0,  2,  5,  7,  10,  7,  5,  2,  0, -2, -5, -7, -10, -10, -10 };

@@ -70,13 +70,13 @@ public class NetMutateService {
 
         final Layer parentLayer = net.getLayerList().get(parentLayerPos);
         parentLayer.getNeuronList().stream().forEach((parentNeuron -> {
-            newNeuron.getInputList().add(new Input(parentNeuron, HIGH_VALUE, LOW_VALUE));
+            newNeuron.getInputList().add(new Input(parentNeuron, HIGH_VALUE));
             //newNeuron.setFuncForce(Neuron.Func.IS, HIGH_VALUE);
         }));
 
         final Layer childLayer = net.getLayerList().get(childLayerPos);
         childLayer.getNeuronList().stream().forEach((childNeuron -> {
-            childNeuron.getInputList().add(new Input(newNeuron, HIGH_VALUE, LOW_VALUE));
+            childNeuron.getInputList().add(new Input(newNeuron, HIGH_VALUE));
             //newNeuron.setFuncForce(Neuron.Func.IS, HIGH_VALUE);
         }));
     }
@@ -144,6 +144,36 @@ public class NetMutateService {
                     input.setWeight(HIGH_VALUE);
                 } else {
                     input.setWeight(newWeight);
+                }
+            }
+        }
+        if ((rnd.nextInt(HIGH_VALUE) <= neuronMutationRate)) {
+            final int lowLimit = input.getLowLimit();
+            final int highLimit = input.getLowLimit();
+            final int diff = rnd.nextInt(HIGH_VALUE + 1) - HIGH_D2_VALUE;
+            final int newLowLimit = lowLimit + diff;
+            if (newLowLimit < LOW_VALUE) {
+                input.setLowLimit(LOW_VALUE);
+            } else {
+                if (newLowLimit >= highLimit) {
+                    input.setLowLimit(highLimit);
+                } else {
+                    input.setLowLimit(newLowLimit);
+                }
+            }
+        }
+        if ((rnd.nextInt(HIGH_VALUE) <= neuronMutationRate)) {
+            final int lowLimit = input.getLowLimit();
+            final int highLimit = input.getLowLimit();
+            final int diff = rnd.nextInt(HIGH_VALUE + 1) - HIGH_D2_VALUE;
+            final int newHighLimit = highLimit + diff;
+            if (newHighLimit > HIGH_VALUE) {
+                input.setHighLimit(HIGH_VALUE);
+            } else {
+                if (newHighLimit <= lowLimit) {
+                    input.setHighLimit(lowLimit);
+                } else {
+                    input.setHighLimit(newHighLimit);
                 }
             }
         }

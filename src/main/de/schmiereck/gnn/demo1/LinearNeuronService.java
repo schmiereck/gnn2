@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 import de.schmiereck.gnn.Input;
 import de.schmiereck.gnn.Neuron;
 
+import static de.schmiereck.gnn.InputService.getInputWithWeight;
+
 /**
  * Linear Neurons with input-limits and without reinforcement.
  */
 public class LinearNeuronService {
-    public static final int HIGH_VALUE = 100;
+    public static final int HIGH_VALUE = 10;//100;
     public static final int NULL_VALUE = 0;
     public static final int LOW_VALUE = -HIGH_VALUE;
     public static final int HIGH_D2_VALUE = HIGH_VALUE / 2;
@@ -24,7 +26,7 @@ public class LinearNeuronService {
         final int average;
         if (inputs.size() > 0) {
             final int inputSum = inputs.stream().collect(Collectors.summingInt(input -> {
-                if (input.getInputWithWeight() >= input.getHighLimit()) return input.getInputWithWeight(); else return NULL_VALUE;
+                if (getInputWithWeight(input) >= input.getHighLimit()) return getInputWithWeight(input); else return NULL_VALUE;
             }));
             average = inputSum / inputs.size();
         } else {

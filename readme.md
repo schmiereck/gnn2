@@ -9,6 +9,14 @@ Wenn Anzahl Individduen mit gleicher Fittnes ansteigt (Ausbrechen aus lokalem Op
  - den Bereich in dem die Fittnes verglichen wird reduzieren (Berge reduzieren)
 - sortieren mit Zufallszahl verknüpfen um sortierung durcheinander zu bringen.
 
+Threshold-Types
+
+Könnte durch einen Low-Level und einen High-Level-Threshold in einem abgebildet werden(?).
+1. wenn Input höher als Threshold dann HIGH, sonst NULL
+2. wenn Input höher als Threshold dann HIGH, sonst Input
+3. wenn Input kleiner als Threshold dann NULL, sonst Input
+
+   
 # Definitionen
 
 Ein **Individuum** existiert in einer **Population**.

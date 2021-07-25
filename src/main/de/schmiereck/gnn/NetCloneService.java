@@ -37,7 +37,7 @@ public class NetCloneService {
     private static Input cloneInput(final Net retNet, final Input input) {
         final Neuron neuron = input.getNeuron();
         final Neuron cloneInputNeuron = retNet.getNeuron(neuron.getLayerPos(), neuron.getNeuronPos());
-        final Input retInput = new Input(cloneInputNeuron, input.getWeight(), input.getHighLimit());
+        final Input retInput = new Input(cloneInputNeuron, input.getWeight(), input.getLowLimit(), input.getHighLimit());
         return retInput;
     }
 }

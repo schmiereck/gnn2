@@ -22,8 +22,8 @@ public class FuncNeuronService_calc_OR_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.getFuncForceArr()[Neuron.Func.OR.ordinal()] = HIGH_D3_VALUE;
         neuron.getFuncForceArr()[Neuron.Func.AND.ordinal()] = HIGH_2D3_VALUE;
 
@@ -45,8 +45,8 @@ public class FuncNeuronService_calc_OR_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.getFuncForceArr()[Neuron.Func.OR.ordinal()] = HIGH_D3_VALUE;
         neuron.getFuncForceArr()[Neuron.Func.AND.ordinal()] = HIGH_2D3_VALUE;
 
@@ -68,8 +68,8 @@ public class FuncNeuronService_calc_OR_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.getFuncForceArr()[Neuron.Func.OR.ordinal()] = HIGH_D3_VALUE;
         neuron.getFuncForceArr()[Neuron.Func.AND.ordinal()] = HIGH_2D3_VALUE;
 
@@ -91,8 +91,8 @@ public class FuncNeuronService_calc_OR_AND_func_Test {
         final Neuron in2Neuron = new Neuron();
         final Neuron neuron = new Neuron();
 
-        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE, NULL_VALUE));
-        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE, NULL_VALUE));
+        neuron.getInputList().add(new Input(in1Neuron, HIGH_VALUE));
+        neuron.getInputList().add(new Input(in2Neuron, HIGH_VALUE));
         neuron.getFuncForceArr()[Neuron.Func.OR.ordinal()] = HIGH_D3_VALUE;
         neuron.getFuncForceArr()[Neuron.Func.AND.ordinal()] = HIGH_2D3_VALUE;
 
