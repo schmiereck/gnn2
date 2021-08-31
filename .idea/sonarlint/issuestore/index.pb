@@ -1,6 +1,4 @@
 
-8
-gnn2.iml,0\b\0be15c93d2cbd3d583a3b89e55f287f441340b0a
 T
 $src/main/de/schmiereck/gnn/Main.java,7\f\7fb27a23af172be59e80cb1a6aacbd712c0d184b
 h
@@ -49,8 +47,6 @@ d
 4src/test/de/schmiereck/gnn/demo1/NetServiceTest.java,d\d\dda5b29f5e0c2f7e365e26427fa44160a7419ecf
 h
 8src/test/de/schmiereck/gnn/demo2/FuncNetServiceTest.java,7\8\783d430ed358cbe9ca0e98685aa7a0b48478c92d
-z
-Jsrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_AND_func_Test.java,9\9\99eb22ab5845a2664f7817d31455c6a927e70668
 y
 Isrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_IS_func_Test.java,8\0\80fba78399395288e8f3fb2d6c11796cb04f90ab
 z
@@ -63,3 +59,7 @@ Isrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_OR_func_Test.java,9\0\
 Ksrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_XNOR_func_Test.java,4\4\44a49bce5aef2570ecb324b1cfbc59f484ec3217
 z
 Jsrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_XOR_func_Test.java,2\0\20879892ca13e9f0147e02a485f39c0da0914f00
+8
+gnn2.iml,0\b\0be15c93d2cbd3d583a3b89e55f287f441340b0a
+z
+Jsrc/test/de/schmiereck/gnn/demo2/FuncNeuronService_calc_AND_func_Test.java,9\9\99eb22ab5845a2664f7817d31455c6a927e70668

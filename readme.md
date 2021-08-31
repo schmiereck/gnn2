@@ -3,9 +3,23 @@
 Genetischer Algorithmus für das Training.
 1. Beweisen, dass dies funktioniert.
 
+Die Neuronen können verschiedene Typen von Verknüpfungsfunktionen haben (AND; OR; NAND; XOR, ...).
+Da für diese beim lernen keine "einfachen" Anpassungen über Backpropagation implementierbar 
+sind, wird das lernen über einen genetischen Algorithmus mit einfachen Zufallsänderungen
+in den Verknüpfungen realisiert.
+
+Es werden jeweils die besten Individuen mutiert und weiter verwendet.
+
+Auch dieser Algorithmus kann in ein lokales Optimum laufen, aus dem er nicht
+heraus findet.
+Diese Situation soll erkannt werden und dann ein spezieller Modus verwendet werden,
+um aus dem lokalen Optimum herauszufinden.
+* Lösungsmöglichkeiten:
+  * Zeitweises umdrehen der Bewertungsfunktion und die schlechtesten Individuen verwenden.
+
 # ToDo
 
-Wenn Anzahl Individduen mit gleicher Fittnes ansteigt (Ausbrechen aus lokalem Optimum)
+Wenn Anzahl Individuen mit gleicher Fitness ansteigt (Ausbrechen aus lokalem Optimum)
  - den Bereich in dem die Fittnes verglichen wird reduzieren (Berge reduzieren)
 - sortieren mit Zufallszahl verknüpfen um sortierung durcheinander zu bringen.
 
