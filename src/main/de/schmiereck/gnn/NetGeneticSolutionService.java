@@ -14,6 +14,14 @@ import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
 import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 
 public class NetGeneticSolutionService {
+    public static class SolutionConfig {
+        int populationSize = 1000;
+
+        public void setPopulationSize(final int populationSize) {
+            this.populationSize = populationSize;
+        }
+    }
+
     public static class SolutionData {
         Net net;
         NetFitnessCheckerService.FitnessData fitnessData;
@@ -24,7 +32,7 @@ public class NetGeneticSolutionService {
     }
 
     public static Net solve(final int[][] inputArr, final int[][] expectedOutputArr, final Random rnd, final int maxGenerations, final NetMutateService.MutateConfig mutateConfig,
-            final int[] neuronCountPerLayer) {
+            final SolutionConfig solutionConfig, final int[] neuronCountPerLayer) {
         final Net retNet;
         final int[] initialNeuronCountPerLayer;
         if (neuronCountPerLayer == null) {
@@ -36,8 +44,7 @@ public class NetGeneticSolutionService {
 
         final List<SolutionData> populationNetList = new ArrayList<>();
 
-        final int populationSize = 1000;
-        for (int pos = 0; pos < populationSize; pos++) {
+        for (int pos = 0; pos < solutionConfig.populationSize; pos++) {
             final Net cloneNet = NetCloneService.clone(evaNet);
             NetMutateService.mutateNet(cloneNet, rnd, Neuron::new, null, mutateConfig);
             populationNetList.add(new SolutionData(cloneNet));

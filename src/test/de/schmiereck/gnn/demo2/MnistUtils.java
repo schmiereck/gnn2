@@ -23,8 +23,8 @@ public abstract class MnistUtils {
         int[] pixelArr = new int[28 * 28];
     }
 
-    public static List<MnistData> readMnistData(final InputStream inputStream) {
-        final List<String[]> content = readCsvData(inputStream);
+    public static List<MnistData> readMnistData(final InputStream inputStream, final int startLine, final int endLine) {
+        final List<String[]> content = readCsvData(inputStream, startLine, endLine);
 
         final List<MnistData> mnistDataList = content.stream().map(strArr -> {
             final MnistData mnistData = new MnistData();
@@ -38,12 +38,16 @@ public abstract class MnistUtils {
         return mnistDataList;
     }
 
-    public static List<String[]> readCsvData(final InputStream inputStream) {
+    public static List<String[]> readCsvData(final InputStream inputStream, final int startLine, final int endLine) {
         final List<String[]> content = new ArrayList<>();
         try (final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
+            int linePos = 0;
             while ((line = br.readLine()) != null) {
-                content.add(line.split(","));
+                if ((linePos >= startLine) && (linePos < endLine)) {
+                    content.add(line.split(","));
+                }
+                linePos++;
             }
         } catch (final IOException ex) {
             throw new RuntimeException(String.format("IO error while reading file."), ex);
