@@ -93,11 +93,11 @@ public class NetFitnessCheckerService {
             }
         }
 
-        for (int outputPos = 0; outputPos < outputLayerSize; outputPos++) {
-            fitnessData.outputNeuronDiff[outputPos] /= inputArr.length;
-            fitnessData.outputDiff /= inputArr.length;
-            fitnessData.reducedOutputDiff /= inputArr.length;
-        }
+        //for (int outputPos = 0; outputPos < outputLayerSize; outputPos++) {
+        //    fitnessData.outputNeuronDiff[outputPos] /= inputArr.length;
+        //    fitnessData.outputDiff /= inputArr.length;
+        //    fitnessData.reducedOutputDiff /= inputArr.length;
+        //}
 
         for (int outputPos = 0; outputPos < outputLayerSize; outputPos++) {
             final int outputNeuronDiff = fitnessData.outputNeuronDiff[outputPos];

@@ -158,9 +158,10 @@ public class NetGeneticSolutionServiceTest {
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
-        // count:20, fitnessData.outputDiff:0
-        // { f(IS):[[0]*10] } { f(IS):[[1]*10] }
-        // { f(NOT*5,NAND*5):[[0]*10,[1]*10] }
+        // count:4369, fitnessData.outputDiff:0
+        //{ f(IS):[[0]<-10|10>*10] } { f(IS):[[1]<-10|10>*10] }
+        //{ f(AND*10):[[0]<-10|-9>*3,[1]<-10|-6>*10] } { f(IS*10):[[0]<-10|10>*10,[1]<-10|10>*10] }
+        //{ f(NOT*10):[[0]<-10|-8>*10,[1]<-10|10>*10] }
     }
 
     @Test
