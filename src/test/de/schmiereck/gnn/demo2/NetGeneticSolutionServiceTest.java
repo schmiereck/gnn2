@@ -10,6 +10,7 @@ import de.schmiereck.gnn.NetGeneticSolutionService;
 import de.schmiereck.gnn.Net;
 import de.schmiereck.gnn.NetFitnessCheckerService;
 import de.schmiereck.gnn.NetMutateService;
+import de.schmiereck.gnn.NetServiceTestUtils;
 import de.schmiereck.gnn.Neuron;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_D2_VALUE;
@@ -47,7 +48,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 1, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -81,7 +82,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 36*2, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -116,7 +117,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 20*4, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -154,7 +155,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 200000*4, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -192,7 +193,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 350000*1, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -253,7 +254,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 350000*8, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -294,7 +295,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 25000*4, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -352,7 +353,7 @@ public class NetGeneticSolutionServiceTest {
         final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 250000*6*2, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
 
-        printNet(net);
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertEquals(0, fitnessData.getOutputDiff());
@@ -364,42 +365,5 @@ public class NetGeneticSolutionServiceTest {
         //{ f(AND*10):[[0]<-10|-10>*3,[1]<-10|-8>*10,[2]<-10|-5>*3,[3]<-10|-10>*-2] } { f(NOT*10):[[0]<-10|-5>*-10,[1]<-10|-8>*-8,[2]<-10|-7>*6,[3]<-10|-8>*6] } { f(NOT*10):[[0]<-10|-5>*2,
         // [1]<-10|-10>*5,[2]<-10|-10>*10,[3]<-10|-6>*7] } { f(OR*10):[[0]<-10|-10>*-7,[2]<-10|-10>*-6,[3]<-10|-10>*-9] } { f(NOR*10):[[0]<-10|-7>*-5,[1]<-10|-10>*9,[2]<-10|-5>*10,[3]<-10|-5>*-10] }
         //{ f(XNOR*10):[[0]<-10|-5>*9,[1]<-10|-10>*-8,[2]<-10|-10>*-10,[3]<-10|-9>*-10,[4]<-10|-10>*10] } { f(AND*10):[[0]<-10|-8>*8,[1]<-10|-5>*8,[2]<-10|-9>*10,[3]<-10|-6>*10,[4]<-10|-8>*-10] } 
-    }
-
-    private void printNet(final Net net) {
-        net.getLayerList().forEach(layer -> printLayer(layer));
-    }
-
-    private void printLayer(final Layer layer) {
-        layer.getNeuronList().forEach(neuron -> printNeuron(neuron));
-        System.out.println();
-    }
-
-    private void printNeuron(final Neuron neuron) {
-        String ffStr = "";
-        if (neuron.getFunc() != null) {
-            ffStr += neuron.getFunc();
-        }
-        for (Neuron.Func func : Neuron.Func.values()) {
-            final int funcForc = neuron.getFuncForceArr()[func.ordinal()];
-            if (funcForc != 0) {
-                if (ffStr.length() > 0) {
-                    ffStr += ",";
-                }
-                ffStr +=  func.toString() + "*" + funcForc + "";
-            }
-        }
-        String inputStr = "";
-        for (int inputPos = 0; inputPos < neuron.getInputList().size(); inputPos++) {
-            final Input input = neuron.getInputList().get(inputPos);
-            if (input.getWeight() != NULL_VALUE) {
-                if (inputStr.length() > 0) {
-                    inputStr += ",";
-                }
-                inputStr += "[" + input.getNeuron().getNeuronPos() + "]<" + input.getLowLimit() + "|" + input.getHighLimit() + ">*" + input.getWeight();
-            }
-        }
-
-        System.out.printf("{ f(%s):[%s] } ", ffStr, inputStr);
     }
 }

@@ -38,16 +38,19 @@ public abstract class MnistUtils {
         return mnistDataList;
     }
 
-    public static List<String[]> readCsvData(final InputStream inputStream, final int startLine, final int endLine) {
+    public static List<String[]> readCsvData(final InputStream inputStream, final int includeStartLineNr, final int excludedEndLineNr) {
         final List<String[]> content = new ArrayList<>();
         try (final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
-            int linePos = 0;
+            int lineNr = 0;
             while ((line = br.readLine()) != null) {
-                if ((linePos >= startLine) && (linePos < endLine)) {
+                if (lineNr >= includeStartLineNr) {
                     content.add(line.split(","));
                 }
-                linePos++;
+                lineNr++;
+                if (lineNr >= excludedEndLineNr) {
+                    break;
+                }
             }
         } catch (final IOException ex) {
             throw new RuntimeException(String.format("IO error while reading file."), ex);

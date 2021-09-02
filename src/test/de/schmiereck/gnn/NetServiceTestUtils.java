@@ -1,5 +1,6 @@
 package de.schmiereck.gnn;
 
+import static de.schmiereck.gnn.demo1.LinearNeuronService.NULL_VALUE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NetServiceTestUtils {
@@ -80,5 +81,42 @@ public class NetServiceTestUtils {
 
         // Assert-Outputs:
         assertEquals(output0Value, net.getLayerList().get(2).getNeuronList().get(0).getOutputValue());
+    }
+
+    public static void printNet(final Net net) {
+        net.getLayerList().forEach(layer -> printLayer(layer));
+    }
+
+    private static void printLayer(final Layer layer) {
+        layer.getNeuronList().forEach(neuron -> printNeuron(neuron));
+        System.out.println();
+    }
+
+    private static void printNeuron(final Neuron neuron) {
+        String ffStr = "";
+        if (neuron.getFunc() != null) {
+            ffStr += neuron.getFunc();
+        }
+        for (Neuron.Func func : Neuron.Func.values()) {
+            final int funcForc = neuron.getFuncForceArr()[func.ordinal()];
+            if (funcForc != 0) {
+                if (ffStr.length() > 0) {
+                    ffStr += ",";
+                }
+                ffStr +=  func.toString() + "*" + funcForc + "";
+            }
+        }
+        String inputStr = "";
+        for (int inputPos = 0; inputPos < neuron.getInputList().size(); inputPos++) {
+            final Input input = neuron.getInputList().get(inputPos);
+            if (input.getWeight() != NULL_VALUE) {
+                if (inputStr.length() > 0) {
+                    inputStr += ",";
+                }
+                inputStr += "[" + input.getNeuron().getNeuronPos() + "]<" + input.getLowLimit() + "|" + input.getHighLimit() + ">*" + input.getWeight();
+            }
+        }
+
+        System.out.printf("{ f(%s):[%s] } ", ffStr, inputStr);
     }
 }

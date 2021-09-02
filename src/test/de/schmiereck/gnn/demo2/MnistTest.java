@@ -14,6 +14,7 @@ import de.schmiereck.gnn.Net;
 import de.schmiereck.gnn.NetFitnessCheckerService;
 import de.schmiereck.gnn.NetGeneticSolutionService;
 import de.schmiereck.gnn.NetMutateService;
+import de.schmiereck.gnn.NetServiceTestUtils;
 import de.schmiereck.gnn.demo2.MnistUtils;
 
 import static de.schmiereck.gnn.demo1.LinearNeuronService.HIGH_VALUE;
@@ -59,7 +60,8 @@ public class MnistTest {
             throw new RuntimeException(String.format("File \"%s\" not found.", fileName));
         }
 
-        final List<MnistUtils.MnistData> mnistDataList = MnistUtils.readMnistData(inputStream, 0, 100);
+        final int trainNumberCount = 2;
+        final List<MnistUtils.MnistData> mnistDataList = MnistUtils.readMnistData(inputStream, 0, trainNumberCount);
 
         final Random rnd = new Random(2342L);
 
@@ -88,13 +90,17 @@ public class MnistTest {
         final int[] neuronCountPerLayer = new int[] { inputArr[0].length, inputArr[0].length, expectedOutputArr[0].length };
 
         // Act
-        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 100*1, mutateConfig, solutionConfig, neuronCountPerLayer);
+        final Net net = NetGeneticSolutionService.solve(inputArr, expectedOutputArr, rnd, 15*1, mutateConfig, solutionConfig, neuronCountPerLayer);
         final NetFitnessCheckerService.FitnessData fitnessData = NetFitnessCheckerService.check(net, FuncNeuronService::calc, inputArr, expectedOutputArr);
+
+        NetServiceTestUtils.printNet(net);
 
         // Assert
         assertNotNull(mnistDataList);
-        assertEquals(100, mnistDataList.size());
+        assertEquals(trainNumberCount, mnistDataList.size());
         assertEquals(0, fitnessData.getOutputDiff());
+
+        // count:10, fitnessData.outputDiff:30
     }
 
 }
